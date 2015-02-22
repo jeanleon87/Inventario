@@ -71,6 +71,11 @@ return array(
 				*/
 			),
 		),
+		
+		'format' => array(
+        	'datetimeFormat'=>"d M, Y h:m:s a",
+			'dateFormat'=>'d/m/Y',   // <-----ESTE ES
+		),
 
 	),
 
@@ -79,5 +84,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
-	),
+	),	
+	
 );
