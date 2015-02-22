@@ -27,7 +27,9 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'estado_id'); ?>
-		<?php echo $form->textField($model,'estado_id'); ?>
+		<?php
+		echo $form->dropDownList($model,'estado_id', CHtml::listData(Estado::model()->findAll(),'id','estado'),array('empty' => '(Seleccione un estado)'));
+		?>
 		<?php echo $form->error($model,'estado_id'); ?>
 	</div>
 
