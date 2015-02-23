@@ -3,16 +3,14 @@
 /* @var $model Producto */
 
 $this->breadcrumbs=array(
-	'Productos'=>array('index'),
-	'Create',
+	'productos'=>array('index'),
+	'nuevo',
 );
 
 $this->menu=array(
-	array('label'=>'List Producto', 'url'=>array('index')),
-	array('label'=>'Manage Producto', 'url'=>array('admin')),
+	array('label'=>'nuevo producto', 'url'=>array('create')),
+	array('label'=>'ver productos', 'url'=>array('admin')),
 );
 ?>
-
-<h1>Create Producto</h1>
-
+<h3>nuevo producto</h3> 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

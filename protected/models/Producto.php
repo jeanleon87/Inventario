@@ -63,11 +63,11 @@ class Producto extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'producto' => 'Producto',
-			'descripcion' => 'Descripcion',
-			'estado_id' => 'Estado',
-			'categoria_id' => 'Categoria',
+			'id' => 'id',
+			'producto' => 'producto',
+			'descripcion' => 'descripcion',
+			'estado_id' => 'estado',
+			'categoria_id' => 'categoria',
 		);
 	}
 
@@ -88,12 +88,12 @@ class Producto extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+		$criteria->with=array('estado','categoria');
 		$criteria->compare('id',$this->id);
 		$criteria->compare('producto',$this->producto,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
-		$criteria->compare('estado_id',$this->estado_id);
-		$criteria->compare('categoria_id',$this->categoria_id);
+		$criteria->compare('estado.estado',$this->estado_id);
+		$criteria->compare('categoria.categoria',$this->categoria_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

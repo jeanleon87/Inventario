@@ -3,12 +3,12 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Productos',
+	'productos',
 );
 
 $this->menu=array(
-	array('label'=>'Create Producto', 'url'=>array('create')),
-	array('label'=>'Manage Producto', 'url'=>array('admin')),
+	array('label'=>'nuevo producto', 'url'=>array('create')),
+	array('label'=>'ver productos', 'url'=>array('admin')),
 );
 ?>
 

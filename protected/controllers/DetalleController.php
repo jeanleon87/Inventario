@@ -134,14 +134,20 @@ class DetalleController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Detalle('search');
+		/*$model=new Detalle('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Detalle']))
-			$model->attributes=$_GET['Detalle'];
+			$model->attributes=$_GET['Detalle'];*/
+			
+		$criteria=new CDbCriteria;
+        $criteria->select = '*, sum(cantidad) as existencia';		
+        $criteria->with = 'producto';        
+        $criteria->group = 'producto.id';     
+		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria));   
+		
+		print_r($dataProvider);die;
 
-		$this->render('admin',array(
-			'model'=>$model,
-		));
+		$this->render('admin',array('dataProvider'=>$dataProvider,'model'=>$model));
 	}
 
 	/**

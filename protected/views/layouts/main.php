@@ -29,7 +29,7 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Inventario', 'url'=>array('/site/index')),
+				array('label'=>'Inventario', 'url'=>array('/detalle/admin')),
 				array('label'=>'Categorias', 'url'=>array('/categoria/admin')),
 				array('label'=>'Productos', 'url'=>array('/producto/admin')),
 				array('label'=>'Operaciones', 'url'=>array('/transaccion/admin'), 'visible'=>Yii::app()->user->isGuest),

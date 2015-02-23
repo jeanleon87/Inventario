@@ -15,26 +15,26 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note">campos con <span class="required">*</span> son obligatorios.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'categoria'); ?>
-		<?php echo $form->textField($model,'categoria',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->textField($model,'categoria',array('size'=>60,'maxlength'=>100,'placeholder'=>'nombre de la categoria')); ?>
 		<?php echo $form->error($model,'categoria'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'estado_id'); ?>
 		<?php
-		echo $form->dropDownList($model,'estado_id', CHtml::listData(Estado::model()->findAll(),'id','estado'),array('empty' => '(Seleccione un estado)'));
+		echo $form->dropDownList($model,'estado_id', CHtml::listData(Estado::model()->findAll(),'id','estado'),array('empty' => '(seleccione un estado)'));
 		?>
 		<?php echo $form->error($model,'estado_id'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'crear' : 'guardar'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

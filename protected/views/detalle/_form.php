@@ -21,8 +21,10 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'fecha'); ?>
+		<?php //echo $form->textField($model,'fecha'); ?>
 		<?php
         // widget
+        
         $this->widget('zii.widgets.jui.CJuiDatePicker', array(
             'language'=>'es',
             'model'=>$model,
@@ -72,13 +74,17 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'producto_id'); ?>
-		<?php echo $form->textField($model,'producto_id'); ?>
+		<?php
+		echo $form->dropDownList($model,'producto_id', CHtml::listData(Producto::model()->findAll(),'id','producto'),array('empty' => '(seleccione un producto)'));
+		?>		
 		<?php echo $form->error($model,'producto_id'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'transaccion_id'); ?>
-		<?php echo $form->textField($model,'transaccion_id'); ?>
+		<?php
+		echo $form->dropDownList($model,'transaccion_id', CHtml::listData(Transaccion::model()->findAll(),'id','transaccion'),array('empty' => '(seleccione un estado)'));
+		?>		
 		<?php echo $form->error($model,'transaccion_id'); ?>
 	</div>
 

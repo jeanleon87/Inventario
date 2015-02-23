@@ -38,7 +38,7 @@ class Detalle extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha, precio, cantidad, producto_id, transaccion_id', 'required'),
+			array('precio, cantidad, producto_id, transaccion_id', 'required'),
 			array('cantidad, exento, producto_id, transaccion_id', 'numerical', 'integerOnly'=>true),
 			array('precio', 'numerical'),
 			array('fecha', 'length', 'max'=>20),
@@ -99,6 +99,7 @@ class Detalle extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		$criteria->with=array('producto');
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('fecha',$this->fecha,true);
@@ -106,7 +107,7 @@ class Detalle extends CActiveRecord
 		$criteria->compare('cantidad',$this->cantidad);
 		$criteria->compare('exento',$this->exento);
 		$criteria->compare('comentario',$this->comentario,true);
-		$criteria->compare('producto_id',$this->producto_id);
+		$criteria->compare('producto.producto',$this->producto_id);
 		$criteria->compare('transaccion_id',$this->transaccion_id);
 
 		return new CActiveDataProvider($this, array(
@@ -130,4 +131,21 @@ class Detalle extends CActiveRecord
         if($this->fecha == null)
         	$this->addError('fecha','La fecha es requerida.');
 	}
+	
+	public function getTotal() {
+        $total = 0;
+		
+		$criteria=new CDbCriteria;
+		$criteria->with=array('producto');
+		$criteria->condition = "producto.id=".$this->producto_id;
+		$records = Detalle::model()->findAll($criteria);
+		
+		//$records = Detalle::model()->findAll(array('condition'=>'id=:tid','params'=>array(':tid' => $this->id)));
+        foreach ($records as $record) {
+        	//print_r($record);die;        	
+            $total += $record->cantidad;
+			
+        }
+        return $total;
+    }
 }

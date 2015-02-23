@@ -58,9 +58,9 @@ class Categoria extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'categoria' => 'Categoria',
-			'estado_id' => 'Estado',
+			'id' => 'id',
+			'categoria' => 'categoria',
+			'estado_id' => 'estado',
 		);
 	}
 
@@ -81,11 +81,11 @@ class Categoria extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+		$criteria->with = "estado";
 		$criteria->compare('id',$this->id);
 		$criteria->compare('categoria',$this->categoria,true);
-		$criteria->compare('estado_id',$this->estado_id);
-
+		$criteria->compare('estado.estado',$this->estado_id);
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

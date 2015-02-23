@@ -3,16 +3,13 @@
 /* @var $model Categoria */
 
 $this->breadcrumbs=array(
-	'Categorias'=>array('index'),
-	'Create',
+	'categorias'=>array('index'),
+	'nueva',
 );
 
-$this->menu=array(
-	array('label'=>'List Categoria', 'url'=>array('index')),
-	array('label'=>'Manage Categoria', 'url'=>array('admin')),
+$this->menu=array(	
+	array('label'=>'ver categorias', 'url'=>array('admin')),
 );
 ?>
-
-<h1>Create Categoria</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
