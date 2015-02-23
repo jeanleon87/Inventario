@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-02-2015 a las 17:58:39
+-- Tiempo de generación: 23-02-2015 a las 02:36:22
 -- Versión del servidor: 5.5.20
 -- Versión de PHP: 5.3.10
 
@@ -32,14 +32,17 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   `estado_id` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_categoria_estado_idx` (`estado_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `categoria`
 --
 
 INSERT INTO `categoria` (`id`, `categoria`, `estado_id`) VALUES
-(1, 'Alimentos', 1);
+(1, 'Alimentos', 1),
+(2, 'Jabon', 1),
+(3, 'Higiene', 1),
+(4, 'Viveres', 1);
 
 -- --------------------------------------------------------
 
@@ -59,7 +62,16 @@ CREATE TABLE IF NOT EXISTS `detalle` (
   PRIMARY KEY (`id`),
   KEY `fk_detalle_producto1_idx` (`producto_id`),
   KEY `fk_detalle_transaccion1_idx` (`transaccion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Volcado de datos para la tabla `detalle`
+--
+
+INSERT INTO `detalle` (`id`, `fecha`, `precio`, `cantidad`, `exento`, `comentario`, `producto_id`, `transaccion_id`) VALUES
+(3, 1423699200, 400.00, 2, 1, 'asad', 1, 1),
+(4, 1424476800, 444.00, 33, NULL, '', 2, 2),
+(5, 1424563200, 999.99, 4, NULL, '44', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -96,7 +108,16 @@ CREATE TABLE IF NOT EXISTS `producto` (
   PRIMARY KEY (`id`),
   KEY `fk_producto_estado1_idx` (`estado_id`),
   KEY `fk_producto_categoria1_idx` (`categoria_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`id`, `producto`, `descripcion`, `estado_id`, `categoria_id`) VALUES
+(1, 'azucar', 'cazta 1Kg', 1, 1),
+(2, 'Atun', 'margarita 184g', 1, 1),
+(3, 'Las llaves', 'pasta', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -108,7 +129,15 @@ CREATE TABLE IF NOT EXISTS `transaccion` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `transaccion` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `transaccion`
+--
+
+INSERT INTO `transaccion` (`id`, `transaccion`) VALUES
+(1, 'Ingreso'),
+(2, 'Egreso');
 
 --
 -- Restricciones para tablas volcadas
@@ -131,8 +160,8 @@ ALTER TABLE `detalle`
 -- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD CONSTRAINT `fk_producto_estado1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_producto_categoria1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_producto_categoria1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_producto_estado1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
