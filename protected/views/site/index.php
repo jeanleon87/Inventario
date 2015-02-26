@@ -4,17 +4,50 @@
 $this->pageTitle=Yii::app()->name;
 ?>
 
-<h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
+<?php
+	print_r(md5_file('./_backup/db_backup_LOCAL.sql'));
+	echo '<br>';
+	print_r(md5_file('./_backup/db_backup_LOCAL2.sql'));
+	echo '<br>';
+	
+	define('READ_LEN', 4096);
 
-<p>Congratulations! You have successfully created your Yii application.</p>
+if(files_identical('./_backup/db_backup_LOCAL.sql', './_backup/db_backup_LOCAL2.sql'))
+    echo 'files identical';
+else
+    echo 'files not identical';
 
-<p>You may change the content of this page by modifying the following two files:</p>
-<ul>
-	<li>View file: <code><?php echo __FILE__; ?></code></li>
-	<li>Layout file: <code><?php echo $this->getLayoutFile('main'); ?></code></li>
-</ul>
+//   pass two file names
+//   returns TRUE if files are the same, FALSE otherwise
+function files_identical($fn1, $fn2) {
+    if(filetype($fn1) !== filetype($fn2))
+        return FALSE;
 
-<p>For more details on how to further develop this application, please read
-the <a href="http://www.yiiframework.com/doc/">documentation</a>.
-Feel free to ask in the <a href="http://www.yiiframework.com/forum/">forum</a>,
-should you have any questions.</p>
+    if(filesize($fn1) !== filesize($fn2))
+        return FALSE;
+
+    if(!$fp1 = fopen($fn1, 'rb'))
+        return FALSE;
+
+    if(!$fp2 = fopen($fn2, 'rb')) {
+        fclose($fp1);
+        return FALSE;
+    }
+
+    $same = TRUE;
+    while (!feof($fp1) and !feof($fp2))
+        if(fread($fp1, READ_LEN) !== fread($fp2, READ_LEN)) {
+            $same = FALSE;
+            break;
+        }
+
+    if(feof($fp1) !== feof($fp2))
+        $same = FALSE;
+
+    fclose($fp1);
+    fclose($fp2);
+
+    return $same;
+}
+	
+?>

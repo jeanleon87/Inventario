@@ -57,7 +57,7 @@ class DefaultController extends Controller
 	public $fp ;
 	public $file_name;
 	public $_path = null;
-	public $back_temp_file = 'db_backup';
+	public $back_temp_file = 'db_backup_LOCAL';
 
 	protected function getPath()
 	{
@@ -165,7 +165,7 @@ class DefaultController extends Controller
 		//$this->file_name =  $this->path . $this->back_temp_file . date('Y.m.d_H.i.s') . '.sql';
 		$this->file_name =  $this->path . $this->back_temp_file . '.sql';
 
-		$this->fp = fopen( $this->file_name, 'r+');
+		$this->fp = fopen( $this->file_name, 'c+');
 
 		if ( $this->fp == null )
 		return false;
