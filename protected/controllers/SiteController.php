@@ -29,6 +29,20 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
+		
+		/*
+		Yii::import('ext.GFtp.GFtpComponent');
+		
+		try {
+			$gftp = Yii::app()->ftp;
+			$files = $gftp->ls('/www/inventario', true, false);
+		    $file = $gftp->get(FTP_BINARY,'/www/inventario/prueba.txt', './_backup/prueba.txt');
+			
+		    $file = $gftp->put(FTP_BINARY, './_backup/db_backup.sql', '/www/inventario/db_backup.sql');
+		} catch (GFtpException $e) {
+		    die('Ooops');
+		}
+		 */		  
 		$this->render('index');
 	}
 
@@ -106,4 +120,9 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+	
+	public function actionBackup()
+    {
+        Helpers::backupDb('/home/user/backups/db.sql');
+    }
 }

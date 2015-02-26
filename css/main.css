@@ -227,3 +227,14 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+
+tr.green ,td.green{
+	background: #ECFBD4;
+}
+tr.red, td.red{
+	background: #FFE9E9;
+}
+tr.grey, td.grey{
+	background: #CCCCCC;
+}

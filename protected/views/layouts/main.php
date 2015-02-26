@@ -28,11 +28,18 @@
 
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
+			'items'=>array(			
+				array('label'=>'Index', 'url'=>array('/site/index')),
+			
 				array('label'=>'Inventario', 'url'=>array('/detalle/admin')),
 				array('label'=>'Categorias', 'url'=>array('/categoria/admin')),
 				array('label'=>'Productos', 'url'=>array('/producto/admin')),
 				array('label'=>'Operaciones', 'url'=>array('/transaccion/admin'), 'visible'=>Yii::app()->user->isGuest),
+				
+				//array('label'=>'Respaldo', 'url'=>array('/site/backup')),
+				array('label'=>'About', 'url'=>array('/backup/default/create')),				
+				array('label'=>'About', 'url'=>array('/backup/default/index')),
+				
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>
@@ -45,13 +52,7 @@
 
 	<?php echo $content; ?>
 
-	<div class="clear"></div>
-
-	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
-	</div><!-- footer -->
+	<div class="clear"></div>	
 
 </div><!-- page -->
 

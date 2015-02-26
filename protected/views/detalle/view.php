@@ -3,31 +3,34 @@
 /* @var $model Detalle */
 
 $this->breadcrumbs=array(
-	'Detalles'=>array('index'),
-	$model->id,
+	'Detalles'=>array('admin'),
+	$model->producto->producto,
 );
 
-$this->menu=array(
-	array('label'=>'List Detalle', 'url'=>array('index')),
-	array('label'=>'Create Detalle', 'url'=>array('create')),
-	array('label'=>'Update Detalle', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Detalle', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Detalle', 'url'=>array('admin')),
-);
 ?>
 
-<h1>View Detalle #<?php echo $model->id; ?></h1>
+<h1>Historico <?php echo $model->producto->producto; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'detalle-grid',
+	'dataProvider'=>$dataProvider,
+	'summaryText'=>'',
+	//'filter'=>$model,
+	'rowCssClassExpression'=>'$data->getColor(2)',
+	'columns'=>array(
 		'id',
-		'fecha',
-		'precio',
-		'cantidad',
-		'exento',
-		'comentario',
-		'producto_id',
-		'transaccion_id',
+		array('name'=>'fecha','type'=>'date'),
+		'precio',		
+		array(
+              'name'=>'cantidad',
+              'value'=>'$data->cantidad',
+              'footer'=>$total
+           ),
+		'comentario',		
+		'transaccion.transaccion',
+		array(
+			'class'=>'CButtonColumn',
+		)	
+		
 	),
 )); ?>

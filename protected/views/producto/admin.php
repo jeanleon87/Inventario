@@ -23,17 +23,17 @@ $this->menu=array(
 			'value'=>'$data->id',
 			'htmlOptions'=>array('width'=>'30px'),			
 		),
+		array(
+  			'name'=>'categoria_id',
+  			'value'=>'$data->categoria->categoria',
+  			'htmlOptions'=>array('width'=>'100px'),
+		),		
 		'producto',
 		'descripcion',
 		array(
   			'name'=>'estado_id',
   			'value'=>'$data->estado->estado',
   			'htmlOptions'=>array('width'=>'70px'),
-		),
-		array(
-  			'name'=>'categoria_id',
-  			'value'=>'$data->categoria->categoria',
-  			'htmlOptions'=>array('width'=>'100px'),
 		),		
 		array(
 			'class'=>'CButtonColumn',

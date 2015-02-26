@@ -20,8 +20,26 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
+		<div class="row">
+			<?php echo $form->labelEx($model,'producto_id'); ?>
+			<?php
+				echo $form->dropDownList($model,'producto_id', CHtml::listData(Producto::model()->findAll(),'id','producto'),array('empty' => '(seleccione un producto)','disabled'=>'disabled'));
+			?>		
+			<?php echo $form->error($model,'producto_id'); ?>
+		</div>
+
+		<div class="row">
+			<?php echo $form->labelEx($model,'transaccion_id'); ?>
+			<?php
+				echo $form->dropDownList($model,'transaccion_id', CHtml::listData(Transaccion::model()->findAll(),'id','transaccion'),array('empty' =>'(seleccione un estado)','disabled'=>'disabled'));
+			?>		
+			<?php echo $form->error($model,'transaccion_id'); ?>
+		</div>
+		
+		
 		<?php echo $form->labelEx($model,'fecha'); ?>
-		<?php //echo $form->textField($model,'fecha'); ?>
+		<?php //echo $form->textField($model,'fecha'); ?>			
+		
 		<?php
         // widget
         
@@ -61,31 +79,9 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'exento'); ?>
-		<?php echo $form->textField($model,'exento'); ?>
-		<?php echo $form->error($model,'exento'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'comentario'); ?>
 		<?php echo $form->textField($model,'comentario',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'comentario'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'producto_id'); ?>
-		<?php
-		echo $form->dropDownList($model,'producto_id', CHtml::listData(Producto::model()->findAll(),'id','producto'),array('empty' => '(seleccione un producto)'));
-		?>		
-		<?php echo $form->error($model,'producto_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'transaccion_id'); ?>
-		<?php
-		echo $form->dropDownList($model,'transaccion_id', CHtml::listData(Transaccion::model()->findAll(),'id','transaccion'),array('empty' => '(seleccione un estado)'));
-		?>		
-		<?php echo $form->error($model,'transaccion_id'); ?>
 	</div>
 
 	<div class="row buttons">

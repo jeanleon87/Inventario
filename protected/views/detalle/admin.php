@@ -6,10 +6,6 @@ $this->breadcrumbs=array(
 	'inventario',
 );
 
-$this->menu=array(
-	array('label'=>'nueva categoria', 'url'=>array('create')),
-);
-
 ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
@@ -18,6 +14,7 @@ $this->menu=array(
 	'filter'=>$model,
 	'template' => "{summary}\n{pager}\n{items}\n{pager}",
 	'summaryText'=>'',
+	'rowCssClassExpression'=>'$data->getColor(1)',
 	'columns'=>array(
 		array(
 			'name'=>'id',
@@ -27,13 +24,14 @@ $this->menu=array(
 		array(
   			'name'=>'producto_id',
   			'value'=>'$data->producto->producto',
-  			'htmlOptions'=>array('width'=>'100px'),
+  			'htmlOptions'=>array('width'=>'300px'),
 		),
 		array(
               'name'=>'cantidad',
               'value'=>'$data->total',
-            ),
-		'cantidad',
+              'htmlOptions'=>array('width'=>'30px'),	
+           ),
+		//'cantidad',
 		//array('name'=>'fecha','type'=>'date'),
 		//'precio',
 		
@@ -45,6 +43,25 @@ $this->menu=array(
 		*/
 		array(
 			'class'=>'CButtonColumn',
+			'template'=>'{view}{add}{del}',    	
+			'htmlOptions'=>array('width'=>'100px'),	
+    		'buttons'=>array(
+    			'view' => array(
+            		'label'=>'Historico',      
+            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/view.png',      		
+            		//'url'=>'Yii::app()->createUrl("producto/c", array("id"=>$data->id))',
+        		),
+    			'add' => array(
+            		'label'=>'Ingreso',      
+            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/add.png',      		
+            		'url'=>'Yii::app()->createUrl("detalle/create", array("id"=>$data->id))',
+        		),
+        		'del' => array(
+            		'label'=>'Eliminar producto',
+            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/delete.png',            		
+            		'url'=>'Yii::app()->createUrl("detalle/update", array("id"=>$data->id))',
+        		),
+    		),
 		),
 	),
 )); ?>

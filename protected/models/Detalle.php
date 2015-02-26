@@ -140,12 +140,27 @@ class Detalle extends CActiveRecord
 		$criteria->condition = "producto.id=".$this->producto_id;
 		$records = Detalle::model()->findAll($criteria);
 		
-		//$records = Detalle::model()->findAll(array('condition'=>'id=:tid','params'=>array(':tid' => $this->id)));
         foreach ($records as $record) {
-        	//print_r($record);die;        	
             $total += $record->cantidad;
 			
         }
         return $total;
     }
+	public function getColor($id){
+		$statuscolor='green';
+		if($id==1){
+			if($this->getTotal()<=0){
+				$statuscolor='red';
+			}			
+		}
+		if($id==2){
+			if($this->cantidad<=0 && $this->transaccion_id==2){
+				$statuscolor='red';
+			}
+			if($this->cantidad==0 && $this->transaccion_id==3){
+				$statuscolor='grey';
+			}
+		}		
+		return $statuscolor;
+	}
 }

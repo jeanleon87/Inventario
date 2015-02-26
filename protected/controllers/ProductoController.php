@@ -70,7 +70,20 @@ class ProductoController extends Controller
 		if(isset($_POST['Producto']))
 		{
 			$model->attributes=$_POST['Producto'];
-			if($model->save())
+			if($model->save()){
+				$ingresoInicial=new Detalle();
+				$ingresoInicial->fechaString=date("d/m/Y");
+				$ingresoInicial->precio=0;
+				$ingresoInicial->cantidad=0;
+				$ingresoInicial->exento=0;
+				$ingresoInicial->comentario="Creacion del producto";
+				$ingresoInicial->producto_id=$model->id;
+				$ingresoInicial->transaccion_id=3;
+				
+				
+				$ingresoInicial->save();
+				
+			}
 				$this->redirect(array('view','id'=>$model->id));
 		}
 

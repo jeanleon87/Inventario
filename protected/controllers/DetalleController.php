@@ -51,18 +51,38 @@ class DetalleController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+		$model=$this->loadModel($id);
+		$total = 0;
+		
+		
+		$criteria=new CDbCriteria;
+		$criteria->with=array('producto');
+		$criteria->condition = "producto.id=".$model->producto_id;
+		$records = Detalle::model()->findAll($criteria);
+		
+		foreach ($records as $record) {
+            $total += $record->cantidad;			
+        }
+		
+		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria));
+		
+		//$model=new Categoria('search');
+		//$model->unsetAttributes();
+		
+		$this->render('view',array('dataProvider'=>$dataProvider,'model'=>$model,'total'=>$total,'model'=>$model));
+				
 	}
 
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($id)
 	{
+		$oldmodel=$this->loadModel($id);
 		$model=new Detalle;
+		$model->producto_id=$oldmodel->producto_id;
+		$model->transaccion_id=1;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -70,8 +90,11 @@ class DetalleController extends Controller
 		if(isset($_POST['Detalle']))
 		{
 			$model->attributes=$_POST['Detalle'];
+			if($model->transaccion_id==2){
+				$model->cantidad=$model->cantidad*-1;
+			}
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('create',array(
@@ -86,6 +109,7 @@ class DetalleController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+		/*
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
@@ -95,11 +119,37 @@ class DetalleController extends Controller
 		if(isset($_POST['Detalle']))
 		{
 			$model->attributes=$_POST['Detalle'];
+			if($model->transaccion_id==2){
+				$model->cantidad=$model->cantidad*-1;
+			}
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('update',array(
+			'model'=>$model,
+		));*/
+		
+		$oldmodel=$this->loadModel($id);
+		$model=new Detalle;
+		$model->producto_id=$oldmodel->producto_id;
+		$model->transaccion_id=2;
+		$model->precio=0;		
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Detalle']))
+		{
+			$model->attributes=$_POST['Detalle'];
+			if($model->transaccion_id==2){
+				$model->cantidad=$model->cantidad*-1;
+			}
+			if($model->save())
+				$this->redirect(array('admin'));
+		}
+
+		$this->render('create',array(
 			'model'=>$model,
 		));
 	}
@@ -134,10 +184,10 @@ class DetalleController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		/*$model=new Detalle('search');
+		$model=new Detalle('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Detalle']))
-			$model->attributes=$_GET['Detalle'];*/
+			$model->attributes=$_GET['Detalle'];
 			
 		$criteria=new CDbCriteria;
         $criteria->select = '*, sum(cantidad) as existencia';		
@@ -145,8 +195,6 @@ class DetalleController extends Controller
         $criteria->group = 'producto.id';     
 		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria));   
 		
-		print_r($dataProvider);die;
-
 		$this->render('admin',array('dataProvider'=>$dataProvider,'model'=>$model));
 	}
 

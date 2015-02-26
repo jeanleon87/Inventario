@@ -16,6 +16,8 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.extensions.*',
+		'application.extensions.backup.*',
 	),
 
 	'modules'=>array(
@@ -25,7 +27,8 @@ return array(
 			'password'=>false,
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
-		),		
+		),
+		'backup',		
 	),
 
 	// application components
@@ -35,6 +38,24 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
+		
+		/*'ftp'=>array(
+          	'class'=>'application.extensions.ftp.EFtpComponent',
+          	'host'=>'ftp.ingenieroweb.com.ve',
+          	'port'=>21,
+          	'username'=>'ingenie3',
+          	'password'=>'jclv17465458',
+          	'ssl'=>false,
+          	'timeout'=>90,
+          	'autoConnect'=>true,
+    	),*/
+    	
+    	'ftp' => array(
+            'class' => 'ext.GFtp.GFtpApplicationComponent',
+            'connectionString' => 'ftp://ingenie3:jclv17465@ftp.ingenieroweb.com.ve:21',
+            'timeout' => 120,
+            'passive' => false
+        ),
 
 		// uncomment the following to enable URLs in path-format
 		/*
