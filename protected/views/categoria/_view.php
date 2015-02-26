@@ -13,9 +13,5 @@
 	<?php echo CHtml::encode($data->categoria); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('estado_id')); ?>:</b>
-	<?php echo CHtml::encode($data->estado_id); ?>
-	<br />
-
 
 </div>

@@ -27,13 +27,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'estado_id'); ?>
-		<?php echo $form->textField($model,'estado_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'categoria_id'); ?>
-		<?php echo $form->textField($model,'categoria_id'); ?>
+		<?php echo $form->label($model,'subcategoria_id'); ?>
+		<?php echo $form->textField($model,'subcategoria_id'); ?>
 	</div>
 
 	<div class="row buttons">

@@ -1,18 +1,18 @@
 <?php
-/* @var $this ProductoController */
+/* @var $this SubcategoriaController */
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Productos',
+	'Subcategorias',
 );
 
 $this->menu=array(
-	array('label'=>'Create Producto', 'url'=>array('create')),
-	array('label'=>'Manage Producto', 'url'=>array('admin')),
+	array('label'=>'Create Subcategoria', 'url'=>array('create')),
+	array('label'=>'Manage Subcategoria', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Productos</h1>
+<h1>Subcategorias</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

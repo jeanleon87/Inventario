@@ -7,8 +7,7 @@
  * @property integer $id
  * @property string $fecha
  * @property double $precio
- * @property integer $cantidad
- * @property integer $exento
+ * @property double $cantidad
  * @property string $comentario
  * @property integer $producto_id
  * @property integer $transaccion_id
@@ -19,12 +18,10 @@
  */
 class Detalle extends CActiveRecord
 {
+	public $fechaString;
 	/**
 	 * @return string the associated database table name
 	 */
-	 
-	public $fechaString;
-	
 	public function tableName()
 	{
 		return 'detalle';
@@ -39,16 +36,17 @@ class Detalle extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('precio, cantidad, producto_id, transaccion_id', 'required'),
-			array('cantidad, exento, producto_id, transaccion_id', 'numerical', 'integerOnly'=>true),
-			array('precio', 'numerical'),
+			array('producto_id, transaccion_id', 'numerical', 'integerOnly'=>true),
+			array('precio, cantidad', 'numerical'),
 			array('fecha', 'length', 'max'=>20),
-			array('comentario', 'length', 'max'=>255),			
 			array('fechaString','convertir_fecha'),  // <---AQUI
 			array('fecha, fechaString', 'required'),  // <--- AQUI
+			array('comentario', 'length', 'max'=>255),
+			
 			array('fechaString', 'length', 'max'=>20),  // <--- Y AQUI
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, fecha, precio, cantidad, exento, comentario, producto_id, transaccion_id', 'safe', 'on'=>'search'),
+			array('id, fecha, precio, cantidad, comentario, producto_id, transaccion_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -75,7 +73,6 @@ class Detalle extends CActiveRecord
 			'fecha' => 'Fecha',
 			'precio' => 'Precio',
 			'cantidad' => 'Cantidad',
-			'exento' => 'Exento',
 			'comentario' => 'Comentario',
 			'producto_id' => 'Producto',
 			'transaccion_id' => 'Transaccion',
@@ -100,12 +97,10 @@ class Detalle extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 		$criteria->with=array('producto');
-
 		$criteria->compare('id',$this->id);
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('precio',$this->precio);
-		$criteria->compare('cantidad',$this->cantidad);
-		$criteria->compare('exento',$this->exento);
+		$criteria->compare('cantidad',$this->cantidad);		
 		$criteria->compare('comentario',$this->comentario,true);
 		$criteria->compare('producto.producto',$this->producto_id);
 		$criteria->compare('transaccion_id',$this->transaccion_id);
@@ -163,4 +158,5 @@ class Detalle extends CActiveRecord
 		}		
 		return $statuscolor;
 	}
+	
 }

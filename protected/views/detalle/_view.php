@@ -21,10 +21,6 @@
 	<?php echo CHtml::encode($data->cantidad); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('exento')); ?>:</b>
-	<?php echo CHtml::encode($data->exento); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('comentario')); ?>:</b>
 	<?php echo CHtml::encode($data->comentario); ?>
 	<br />
@@ -33,11 +29,9 @@
 	<?php echo CHtml::encode($data->producto_id); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('transaccion_id')); ?>:</b>
 	<?php echo CHtml::encode($data->transaccion_id); ?>
 	<br />
 
-	*/ ?>
 
 </div>

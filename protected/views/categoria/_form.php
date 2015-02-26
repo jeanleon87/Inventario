@@ -24,15 +24,7 @@
 		<?php echo $form->textField($model,'categoria',array('size'=>60,'maxlength'=>100,'placeholder'=>'nombre de la categoria')); ?>
 		<?php echo $form->error($model,'categoria'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'estado_id'); ?>
-		<?php
-		echo $form->dropDownList($model,'estado_id', CHtml::listData(Estado::model()->findAll(),'id','estado'),array('empty' => '(seleccione un estado)'));
-		?>
-		<?php echo $form->error($model,'estado_id'); ?>
-	</div>
-
+	
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'crear' : 'guardar'); ?>
 	</div>

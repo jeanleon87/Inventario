@@ -32,7 +32,7 @@ class ProductoController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','obtenerproductos'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -74,17 +74,13 @@ class ProductoController extends Controller
 				$ingresoInicial=new Detalle();
 				$ingresoInicial->fechaString=date("d/m/Y");
 				$ingresoInicial->precio=0;
-				$ingresoInicial->cantidad=0;
-				$ingresoInicial->exento=0;
+				$ingresoInicial->cantidad=0;				
 				$ingresoInicial->comentario="Creacion del producto";
 				$ingresoInicial->producto_id=$model->id;
 				$ingresoInicial->transaccion_id=3;
-				
-				
 				$ingresoInicial->save();
-				
 			}
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('create',array(
@@ -108,7 +104,7 @@ class ProductoController extends Controller
 		{
 			$model->attributes=$_POST['Producto'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('update',array(
@@ -182,5 +178,12 @@ class ProductoController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionObtenerProductos($idcategoria){
+	
+		$resp = Subcategoria::model()->findAllByAttributes(array('categoria_id'=>$idcategoria));
+		header("Content-type: application/json");
+		echo CJSON::encode($resp);
 	}
 }

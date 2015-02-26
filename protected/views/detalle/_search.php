@@ -32,11 +32,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'exento'); ?>
-		<?php echo $form->textField($model,'exento'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'comentario'); ?>
 		<?php echo $form->textField($model,'comentario',array('size'=>60,'maxlength'=>255)); ?>
 	</div>

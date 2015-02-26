@@ -31,8 +31,9 @@
 			'items'=>array(			
 				array('label'=>'Index', 'url'=>array('/site/index')),
 			
-				array('label'=>'Inventario', 'url'=>array('/detalle/admin')),
+				array('label'=>'Almacen', 'url'=>array('/detalle/admin')),
 				array('label'=>'Categorias', 'url'=>array('/categoria/admin')),
+				array('label'=>'SubCategorias', 'url'=>array('/subcategoria/admin')),
 				array('label'=>'Productos', 'url'=>array('/producto/admin')),
 				array('label'=>'Operaciones', 'url'=>array('/transaccion/admin'), 'visible'=>Yii::app()->user->isGuest),
 				

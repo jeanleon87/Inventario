@@ -3,12 +3,16 @@
 /* @var $model Detalle */
 
 $this->breadcrumbs=array(
-	'Detalles'=>array('admin'),
+	'Detalles'=>array('index'),
 	'Create',
 );
 
+$this->menu=array(
+	array('label'=>'List Detalle', 'url'=>array('index')),
+	array('label'=>'Manage Detalle', 'url'=>array('admin')),
+);
 ?>
 
-<h3>Registro de <?php echo $model->producto->producto; ?></h3>
+<h1>Create Detalle</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

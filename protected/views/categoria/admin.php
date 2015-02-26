@@ -23,12 +23,7 @@ $this->menu=array(
 			'value'=>'$data->id',
 			'htmlOptions'=>array('width'=>'30px'),			
 		),
-		'categoria',
-		array(
-  			'name'=>'estado_id',
-  			'value'=>'$data->estado->estado',
-  			'htmlOptions'=>array('width'=>'70px'),
-		),		
+		'categoria',		
 		array(
 			'class'=>'CButtonColumn',
     		'template'=>'{update}{delete}',

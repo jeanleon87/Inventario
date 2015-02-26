@@ -7,13 +7,11 @@
  * @property integer $id
  * @property string $producto
  * @property string $descripcion
- * @property integer $estado_id
- * @property integer $categoria_id
+ * @property integer $subcategoria_id
  *
  * The followings are the available model relations:
  * @property Detalle[] $detalles
- * @property Estado $estado
- * @property Categoria $categoria
+ * @property Subcategoria $subcategoria
  */
 class Producto extends CActiveRecord
 {
@@ -33,13 +31,13 @@ class Producto extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('producto, estado_id, categoria_id', 'required'),
-			array('estado_id, categoria_id', 'numerical', 'integerOnly'=>true),
+			array('producto, subcategoria_id', 'required'),
+			array('subcategoria_id', 'numerical', 'integerOnly'=>true),
 			array('producto', 'length', 'max'=>100),
 			array('descripcion', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, producto, descripcion, estado_id, categoria_id', 'safe', 'on'=>'search'),
+			array('id, producto, descripcion, subcategoria_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,8 +50,7 @@ class Producto extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'detalles' => array(self::HAS_MANY, 'Detalle', 'producto_id'),
-			'estado' => array(self::BELONGS_TO, 'Estado', 'estado_id'),
-			'categoria' => array(self::BELONGS_TO, 'Categoria', 'categoria_id'),
+			'subcategoria' => array(self::BELONGS_TO, 'Subcategoria', 'subcategoria_id'),
 		);
 	}
 
@@ -63,11 +60,10 @@ class Producto extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'id',
-			'producto' => 'producto',
-			'descripcion' => 'descripcion',
-			'estado_id' => 'estado',
-			'categoria_id' => 'categoria',
+			'id' => 'ID',
+			'producto' => 'Producto',
+			'descripcion' => 'Descripcion',
+			'subcategoria_id' => 'Subcategoria',
 		);
 	}
 
@@ -88,12 +84,12 @@ class Producto extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		$criteria->with=array('estado','categoria');
+		$criteria->with=array('subcategoria','subcategoria.categoria');
+
 		$criteria->compare('id',$this->id);
 		$criteria->compare('producto',$this->producto,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
-		$criteria->compare('estado.estado',$this->estado_id);
-		$criteria->compare('categoria.categoria',$this->categoria_id);
+		$criteria->compare('subcategoria.subcategoria',$this->subcategoria_id);		
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

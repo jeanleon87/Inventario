@@ -17,12 +17,8 @@
 	<?php echo CHtml::encode($data->descripcion); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('estado_id')); ?>:</b>
-	<?php echo CHtml::encode($data->estado_id); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('categoria_id')); ?>:</b>
-	<?php echo CHtml::encode($data->categoria_id); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('subcategoria_id')); ?>:</b>
+	<?php echo CHtml::encode($data->subcategoria_id); ?>
 	<br />
 
 
