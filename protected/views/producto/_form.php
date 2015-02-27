@@ -23,7 +23,7 @@
 	<div class="row">
 		<?php echo CHtml::label('Categorias', 'a'); ?>
 		<?php
-		echo CHtml::dropDownList('categorias', "", array('0' => '-Por favor seleccione-') + CHtml::listData(Categoria::model() -> findAll(), 'id', 'categoria'), array('id' => 'categorias'));
+		echo CHtml::dropDownList('categorias', "", array('0' => '-Por favor seleccione-') + CHtml::listData(Categoria::model() -> findAll(array('order'=>'categoria')), 'id', 'categoria'), array('id' => 'categorias'));
 		?>
 	</div>
 

@@ -6,7 +6,7 @@ class DetalleController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/column1';
 
 	/**
 	 * @return array action filters
@@ -32,7 +32,7 @@ class DetalleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','add'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -64,13 +64,12 @@ class DetalleController extends Controller
             $total += $record->cantidad;			
         }
 		
-		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria));
+		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria,'pagination'=>false));
 		
 		//$model=new Categoria('search');
 		//$model->unsetAttributes();
 		
 		$this->render('view',array('dataProvider'=>$dataProvider,'model'=>$model,'total'=>$total,'model'=>$model));
-				
 	}
 
 	/**
@@ -108,6 +107,27 @@ class DetalleController extends Controller
 	 * @param integer $id the ID of the model to be updated
 	 */
 	public function actionUpdate($id)
+	{
+		
+		$model=$this->loadModel($id);
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+		$model->fechaString = Yii::app()->format->formatDate($model->fecha);
+		
+		if(isset($_POST['Detalle']))
+		{
+			$model->attributes=$_POST['Detalle'];			
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
+		}
+
+		$this->render('update',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionAdd($id)
 	{
 		/*
 		$model=$this->loadModel($id);
@@ -188,13 +208,12 @@ class DetalleController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Detalle']))
 			$model->attributes=$_GET['Detalle'];
-			
-		$criteria=new CDbCriteria;
-        $criteria->select = '*, sum(cantidad) as existencia';		
+		
+		$criteria=new CDbCriteria;        		
         $criteria->with = 'producto';        
         $criteria->group = 'producto.id';     
-		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria));   
-		
+		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria));
+
 		$this->render('admin',array('dataProvider'=>$dataProvider,'model'=>$model));
 	}
 

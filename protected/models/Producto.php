@@ -92,7 +92,7 @@ class Producto extends CActiveRecord
 		$criteria->compare('subcategoria.subcategoria',$this->subcategoria_id);		
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria'=>$criteria,'pagination'=>false,
 		));
 	}
 

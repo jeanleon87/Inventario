@@ -81,8 +81,7 @@ class Subcategoria extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		$criteria->with=array('categoria');
-
+		$criteria->with=array('categoria');		
 		$criteria->compare('id',$this->id);
 		$criteria->compare('subcategoria',$this->subcategoria,true);
 		$criteria->compare('categoria.categoria',$this->categoria_id);

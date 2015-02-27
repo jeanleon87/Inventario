@@ -72,7 +72,8 @@ class ProductoController extends Controller
 			$model->attributes=$_POST['Producto'];
 			if($model->save()){
 				$ingresoInicial=new Detalle();
-				$ingresoInicial->fechaString=date("d/m/Y");
+				//$ingresoInicial->fechaString=date("d/m/Y");
+				$ingresoInicial->fechaString=date("01/01/2015");
 				$ingresoInicial->precio=0;
 				$ingresoInicial->cantidad=0;				
 				$ingresoInicial->comentario="Creacion del producto";

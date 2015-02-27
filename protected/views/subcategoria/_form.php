@@ -22,7 +22,7 @@
 	<div class="row">
 		<?php echo $form->labelEx($model,'categoria_id'); ?>
 		<?php
-			echo $form->dropDownList($model,'categoria_id', CHtml::listData(Categoria::model()->findAll(),'id','categoria'),array('empty' => '(seleccione una categoria)'));
+			echo $form->dropDownList($model,'categoria_id', CHtml::listData(Categoria::model()->findAll(array('order'=>'categoria')),'id','categoria'),array('empty' => '(seleccione una categoria)'));
 		?>		
 		<?php echo $form->error($model,'categoria_id'); ?>
 	</div>

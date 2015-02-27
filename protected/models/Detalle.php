@@ -42,8 +42,7 @@ class Detalle extends CActiveRecord
 			array('fechaString','convertir_fecha'),  // <---AQUI
 			array('fecha, fechaString', 'required'),  // <--- AQUI
 			array('comentario', 'length', 'max'=>255),
-			
-			array('fechaString', 'length', 'max'=>20),  // <--- Y AQUI
+			array('comentario', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, fecha, precio, cantidad, comentario, producto_id, transaccion_id', 'safe', 'on'=>'search'),
@@ -96,17 +95,19 @@ class Detalle extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		$criteria->with=array('producto');
+		$criteria->with=array('producto','producto.subcategoria','producto.subcategoria.categoria');
 		$criteria->compare('id',$this->id);
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('precio',$this->precio);
-		$criteria->compare('cantidad',$this->cantidad);		
+		$criteria->compare('cantidad',$this->cantidad);
 		$criteria->compare('comentario',$this->comentario,true);
 		$criteria->compare('producto.producto',$this->producto_id);
 		$criteria->compare('transaccion_id',$this->transaccion_id);
-
+		$criteria->group='producto.id';
+		$criteria->order='categoria ASC, subcategoria ASC, producto.producto';
+		
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria'=>$criteria,'pagination'=>false,
 		));
 	}
 
@@ -144,7 +145,11 @@ class Detalle extends CActiveRecord
 	public function getColor($id){
 		$statuscolor='green';
 		if($id==1){
-			if($this->getTotal()<=0){
+			if($this->getTotal()==0){
+				$statuscolor='grey';
+			}			
+			
+			if($this->getTotal()<0){
 				$statuscolor='red';
 			}			
 		}
@@ -158,5 +163,4 @@ class Detalle extends CActiveRecord
 		}		
 		return $statuscolor;
 	}
-	
 }
