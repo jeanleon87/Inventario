@@ -19,6 +19,7 @@
 class Detalle extends CActiveRecord
 {
 	public $fechaString;
+	public $firstLetter;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -90,22 +91,32 @@ class Detalle extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
+		
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		$criteria->with=array('producto','producto.subcategoria','producto.subcategoria.categoria');
+		$criteria->with = array(
+			'producto',
+			'producto.subcategoria'=>array(
+				'select'=>'producto.subcategoria',
+				'together'=>true),
+			'producto.subcategoria.categoria'=>array(
+				'select'=>'producto.subcategoria.categoria',
+				'together'=>true
+			)
+		);		
 		$criteria->compare('id',$this->id);
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('precio',$this->precio);
 		$criteria->compare('cantidad',$this->cantidad);
 		$criteria->compare('comentario',$this->comentario,true);
-		$criteria->compare('producto.producto',$this->producto_id);
+		$criteria->compare('producto.producto',$this->producto_id,true);
 		$criteria->compare('transaccion_id',$this->transaccion_id);
 		$criteria->group='producto.id';
-		$criteria->order='categoria ASC, subcategoria ASC, producto.producto';
-		
+		$criteria->order='categoria ASC, subcategoria ASC, producto ASC';
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,'pagination'=>false,
 		));

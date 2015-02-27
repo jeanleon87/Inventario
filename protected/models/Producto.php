@@ -89,7 +89,7 @@ class Producto extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('producto',$this->producto,true);
 		$criteria->compare('descripcion',$this->descripcion,true);
-		$criteria->compare('subcategoria.subcategoria',$this->subcategoria_id);		
+		$criteria->compare('subcategoria.subcategoria',$this->subcategoria_id,true);		
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,'pagination'=>false,

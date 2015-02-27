@@ -14,27 +14,39 @@ $this->menu=array(
 
 ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php //print_r($model->search());die?>
+
+<?php 
+$this->widget('ext.groupgridview.GroupGridView', array(
+//$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'detalle-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'template' => "{summary}\n{pager}\n{items}\n{pager}",
 	'summaryText'=>'',
 	'rowCssClassExpression'=>'$data->getColor(1)',
-	'columns'=>array(
-		
+	'mergeColumns' => array('producto.subcategoria.categoria','producto.subcategoria.subcategoria'),
+	'extraRowColumns' => array('firstLetter'),
+    'extraRowExpression' => '"<b style=\"font-size: 3em; color: black\">".substr($data->producto->subcategoria->categoria->categoria, 0, 1)."</b>"',	
+	'columns'=>array(		
 		array(
-			'name'=>'id',
+           'name' => 'firstLetter',
+           'value' => 'substr($data->producto->subcategoria->categoria->categoria, 0, 1)',
+           'headerHtmlOptions' => array('style' => 'display: none'),
+           'htmlOptions' => array('style' => 'display: none'),
+        ),	
+		array(
+			'header'=>'#',
 			'value'=>'$data->id',
 			'htmlOptions'=>array('width'=>'30px'),			
 		),		
 		array(
-  			'header'=>'Categoria',
+  			'name'=>'producto.subcategoria.categoria',
   			'value'=>'$data->producto->subcategoria->categoria->categoria',
   			'htmlOptions'=>array('width'=>'200px'),
 		),
-		array(
-  			'header'=>'Subcategoria',
+		array(						
+  			'name'=>'producto.subcategoria.subcategoria',  			
   			'value'=>'$data->producto->subcategoria->subcategoria',
   			'htmlOptions'=>array('width'=>'150px'),
 		),

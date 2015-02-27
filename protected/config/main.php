@@ -17,7 +17,8 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.extensions.*',
-		'application.extensions.backup.*',
+		'application.extensions.backup.*',		
+		'application.extensions.groupgridview.*',
 	),
 
 	'modules'=>array(

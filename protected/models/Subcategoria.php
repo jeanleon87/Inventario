@@ -84,7 +84,7 @@ class Subcategoria extends CActiveRecord
 		$criteria->with=array('categoria');		
 		$criteria->compare('id',$this->id);
 		$criteria->compare('subcategoria',$this->subcategoria,true);
-		$criteria->compare('categoria.categoria',$this->categoria_id);
+		$criteria->compare('categoria.categoria',$this->categoria_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

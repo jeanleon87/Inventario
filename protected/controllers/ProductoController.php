@@ -81,7 +81,8 @@ class ProductoController extends Controller
 				$ingresoInicial->transaccion_id=3;
 				$ingresoInicial->save();
 			}
-				$this->redirect(array('admin'));
+				//$this->redirect(array('admin'));
+				$this->redirect(array('detalle/update','id'=>$ingresoInicial->id));
 		}
 
 		$this->render('create',array(

@@ -13,6 +13,7 @@
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
+	'htmlOptions'=>array('autocomplete'=>'off'),
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
@@ -49,14 +50,18 @@
             'attribute'=>'fechaString',
             'flat'=>false,
             'options'=>array(
+            	'showAnim'=>'slideDown',
                 'firstDay'=>1,
                 'showOn'=>"both",                
-                'buttonImageOnly'=> false,
-                //'minDate'=>-31,
-                //'maxDate'=>0,
-                'constrainInput'=>true,
-                'currentText'=>'Now',
-                'dateFormat'=>'dd/mm/yy',
+                'buttonImageOnly'=> false,                
+                'constrainInput'=>true,                
+                'dateFormat'=>'dd/mm/yy',                
+				'showOtherMonths' => true,      // show dates in other months
+        		'selectOtherMonths' => true,    // can seelect dates in other months
+        		'changeYear' => true,           // can change year
+        		'changeMonth' => true,          // can change month        
+        		'showButtonPanel' => false,
+        		'numberOfMonths'=>2,
             ),
             'htmlOptions'=>array(
             ),

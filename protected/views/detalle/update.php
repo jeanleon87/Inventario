@@ -16,6 +16,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Update Detalle <?php echo $model->id; ?></h1>
+<h1>Cargar asiento inicial de: <?php echo $model->producto->producto; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

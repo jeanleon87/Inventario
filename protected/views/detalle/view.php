@@ -7,6 +7,12 @@ $this->breadcrumbs=array(
 	$model->producto->producto,
 );
 
+$this->menu=array(	
+	array('label'=>'Ingreso', 'url'=>array('create','id'=>$model->id)),
+	array('label'=>'Egreso', 'url'=>array('add','id'=>$model->id)),
+	array('label'=>'Asiento', 'url'=>array('update', 'id'=>$model->id)),	
+);
+
 ?>
 
 <h1>Historico <?php echo $model->producto->producto; ?></h1>
@@ -28,9 +34,5 @@ $this->breadcrumbs=array(
            ),
 		'comentario',		
 		'transaccion.transaccion',
-		array(
-			'class'=>'CButtonColumn',
-		)	
-		
 	),
 )); ?>

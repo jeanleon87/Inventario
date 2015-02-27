@@ -51,6 +51,7 @@ class DetalleController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$this->layout='//layouts/column2';
 		$model=$this->loadModel($id);
 		$total = 0;
 		
@@ -93,7 +94,8 @@ class DetalleController extends Controller
 				$model->cantidad=$model->cantidad*-1;
 			}
 			if($model->save())
-				$this->redirect(array('admin'));
+				$this->redirect(array('view','id'=>$model->id));
+				//$this->redirect(array('admin'));
 		}
 
 		$this->render('create',array(
@@ -120,6 +122,7 @@ class DetalleController extends Controller
 			$model->attributes=$_POST['Detalle'];			
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
+				//$this->redirect(array('admin'));
 		}
 
 		$this->render('update',array(
@@ -166,7 +169,8 @@ class DetalleController extends Controller
 				$model->cantidad=$model->cantidad*-1;
 			}
 			if($model->save())
-				$this->redirect(array('admin'));
+				$this->redirect(array('view','id'=>$model->id));
+				//$this->redirect(array('admin'));
 		}
 
 		$this->render('create',array(
@@ -209,12 +213,7 @@ class DetalleController extends Controller
 		if(isset($_GET['Detalle']))
 			$model->attributes=$_GET['Detalle'];
 		
-		$criteria=new CDbCriteria;        		
-        $criteria->with = 'producto';        
-        $criteria->group = 'producto.id';     
-		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria));
-
-		$this->render('admin',array('dataProvider'=>$dataProvider,'model'=>$model));
+		$this->render('admin',array('model'=>$model));
 	}
 
 	/**
