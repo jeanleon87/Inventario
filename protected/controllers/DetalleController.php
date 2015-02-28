@@ -59,6 +59,7 @@ class DetalleController extends Controller
 		$criteria=new CDbCriteria;
 		$criteria->with=array('producto');
 		$criteria->condition = "producto.id=".$model->producto_id;
+		$criteria->order='fecha';
 		$records = Detalle::model()->findAll($criteria);
 		
 		foreach ($records as $record) {

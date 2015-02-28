@@ -34,5 +34,36 @@ $this->menu=array(
            ),
 		'comentario',		
 		'transaccion.transaccion',
+		array(
+			'header'=>'Opciones',
+			'class'=>'CButtonColumn',
+			'template'=>'{view}{plus}{minus}{update}',    	
+			'htmlOptions'=>array('width'=>'170px'),	
+    		'buttons'=>array(
+    			'delete'=> array(
+    				'label'=>'Eliminar',      
+            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/delete.png',    				
+				),
+    			'update'=> array(
+    				'label'=>'Editar',      
+            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/edit.png',    				
+				),
+    			'view' => array(
+            		'label'=>'Historico',      
+            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/view.png',      		
+            		//'url'=>'Yii::app()->createUrl("producto/c", array("id"=>$data->id))',
+        		),
+    			'plus' => array(
+            		'label'=>'Ingreso',      
+            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/plus.png',      		
+            		'url'=>'Yii::app()->createUrl("detalle/create", array("id"=>$data->id))',
+        		),
+        		'minus' => array(
+            		'label'=>'Egreso',
+            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/minus.png',            		
+            		'url'=>'Yii::app()->createUrl("detalle/add", array("id"=>$data->id))',
+        		),
+    		),
+		),
 	),
 )); ?>
