@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
 $this->menu=array(	
 	array('label'=>'Ingreso', 'url'=>array('create','id'=>$model->id)),
 	array('label'=>'Egreso', 'url'=>array('add','id'=>$model->id)),
-	array('label'=>'Asiento', 'url'=>array('update', 'id'=>$model->id)),	
+	//array('label'=>'Asiento', 'url'=>array('update', 'id'=>$model->id)),	
 );
 
 ?>
@@ -20,8 +20,7 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'detalle-grid',
 	'dataProvider'=>$dataProvider,
-	'summaryText'=>'',
-	//'filter'=>$model,
+	'summaryText'=>'',	
 	'rowCssClassExpression'=>'$data->getColor(2)',
 	'columns'=>array(
 		'id',
@@ -38,7 +37,8 @@ $this->menu=array(
 			'header'=>'Opciones',
 			'class'=>'CButtonColumn',
 			'template'=>'{view}{plus}{minus}{first}{delete}',    	
-			'htmlOptions'=>array('width'=>'170px'),	
+			'htmlOptions'=>array('width'=>'170px'),
+			'deleteConfirmation'=>"js:'Advertencia: La eliminacion del registro '+$(this).parent().parent().children(':first-child').text()+' es irreversible. Esta seguro que desea continuar?'",	
     		'buttons'=>array(
     			'delete'=> array(
     				'label'=>'Eliminar',      

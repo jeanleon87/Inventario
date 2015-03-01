@@ -46,7 +46,7 @@ class Detalle extends CActiveRecord
 			array('comentario', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, fecha, precio, cantidad, comentario, producto_id, transaccion_id', 'safe', 'on'=>'search'),
+			array('id, cantidad, comentario, producto_id, firstLetter', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -95,7 +95,7 @@ class Detalle extends CActiveRecord
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
-
+		/*
 		$criteria=new CDbCriteria;
 		$criteria->with = array(
 			'producto',
@@ -107,6 +107,25 @@ class Detalle extends CActiveRecord
 				'together'=>true
 			)
 		);		
+		//$criteria->with=array('producto');
+		$criteria->compare('id',$this->id);
+		$criteria->compare('producto.producto',$this->producto_id,true);
+		$criteria->group='producto_id';
+		$criteria->order='categoria asc, subcategoria asc, producto ASC';
+		 * 
+		 * */
+		 
+		$criteria=new CDbCriteria;
+		$criteria->with = array(
+			'producto',
+			'producto.subcategoria'=>array(
+				'select'=>'producto.subcategoria',
+				'together'=>true),
+			'producto.subcategoria.categoria'=>array(
+				'select'=>'producto.subcategoria.categoria',
+				'together'=>true
+			)
+		);
 		$criteria->compare('id',$this->id);
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('precio',$this->precio);

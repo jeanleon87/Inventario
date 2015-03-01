@@ -63,7 +63,7 @@ class ProductoController extends Controller
 	public function actionCreate()
 	{
 		$model=new Producto;
-
+		$categoria='';
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -82,11 +82,11 @@ class ProductoController extends Controller
 				$ingresoInicial->save();
 			}
 				//$this->redirect(array('admin'));
-				$this->redirect(array('detalle/update','id'=>$ingresoInicial->id));
+				$this->redirect(array('detalle/first','id'=>$ingresoInicial->id));
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$model,'categoria'=>$categoria
 		));
 	}
 
@@ -98,7 +98,7 @@ class ProductoController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+		$categoria=$model->subcategoria->categoria->id;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -109,9 +109,7 @@ class ProductoController extends Controller
 				$this->redirect(array('admin'));
 		}
 
-		$this->render('update',array(
-			'model'=>$model,
-		));
+		$this->render('update',array('model'=>$model,'categoria'=>$categoria));
 	}
 
 	/**

@@ -51,9 +51,10 @@ class CategoriaController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+		$criteria=new CDbCriteria;		
+		$criteria->condition = "categoria_id=".$id;		
+		$dataProvider=new CActiveDataProvider('Subcategoria',array('criteria'=>$criteria,'pagination'=>false));						
+		$this->render('view',array('model'=>$this->loadModel($id),'dataProvider'=>$dataProvider));
 	}
 
 	/**

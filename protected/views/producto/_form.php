@@ -23,14 +23,14 @@
 	<div class="row">
 		<?php echo CHtml::label('Categorias', 'a'); ?>
 		<?php
-		echo CHtml::dropDownList('categorias', "", array('0' => '-Por favor seleccione-') + CHtml::listData(Categoria::model() -> findAll(array('order'=>'categoria')), 'id', 'categoria'), array('id' => 'categorias'));
+		echo CHtml::dropDownList('categorias', $categoria, array('0' => '-Por favor seleccione-') + CHtml::listData(Categoria::model() -> findAll(array('order'=>'categoria')), 'id', 'categoria'), array('id' => 'categorias'));
 		?>
 	</div>
 
 	<div class="row">
 		<?php echo $form -> labelEx($model, 'subcategoria_id'); ?>
 		<?php //echo $form->textField($model,'subcategoria_id'); ?>
-		<?php echo $form -> dropDownList($model, 'subcategoria_id', array(), array('empty' => '(seleccione una categoria)', 'id' => 'subcategoria_id')); ?>
+		<?php echo $form -> dropDownList($model, 'subcategoria_id',array('0' => '-Por favor seleccione-') + CHtml::listData(Subcategoria::model() -> findAll(array('order'=>'subcategoria')), 'id', 'subcategoria') , array('empty' => '(seleccione una subcategoria)', 'id' => 'subcategoria_id')); ?>
 		<?php echo $form -> error($model, 'subcategoria_id'); ?>
 	</div>
 
