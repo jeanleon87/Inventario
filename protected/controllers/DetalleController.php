@@ -20,7 +20,7 @@ class DetalleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('increase','decrease','first'),
+				'actions'=>array('increase','decrease','first','ncategoria','nsubcategoria','nproducto'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -49,9 +49,9 @@ class DetalleController extends Controller
             $total += $record->cantidad;			
         }
 		
-		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria,'pagination'=>false));
-		
-		$this->render('history',array('dataProvider'=>$dataProvider,'model'=>$model,'total'=>$total,'model'=>$model));
+		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>10)));
+				
+		$this->render('history',array('dataProvider'=>$dataProvider,'total'=>$total,'model'=>$model));
 	}
 
 	public function actionIncrease($id)
@@ -92,7 +92,7 @@ class DetalleController extends Controller
 				$model->cantidad=$model->cantidad*-1;
 			}
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('history','id'=>$model->id));
 				//$this->redirect(array('admin'));
 		}
 
@@ -111,7 +111,7 @@ class DetalleController extends Controller
 		{
 			$model->attributes=$_POST['Detalle'];			
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('history','id'=>$model->id));
 				//$this->redirect(array('admin'));
 		}
 
@@ -120,12 +120,18 @@ class DetalleController extends Controller
 		));
 	}
 
+	
 	public function actionDelete($id)
 	{
+		$model=$this->loadModel($id);
+		$first=Detalle::model()->find('producto_id='.$model->producto_id);
+		//print_r($first);die;
+		
 		$this->loadModel($id)->delete();
-
+		
+		
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin',array('model'=>$first,'id'=>$first->id)));
 	}
 
 	public function actionIndex()
@@ -138,12 +144,87 @@ class DetalleController extends Controller
 	
 	public function actionAdmin()
 	{
+		$modelCategoria=new Categoria;
 		$model=new Detalle('search');		
 		$model->unsetAttributes();  // clear any default values		
 		if(isset($_GET['Detalle']))
 			$model->attributes=$_GET['Detalle'];
-		
-		$this->render('admin',array('model'=>$model));
+		Yii::app() -> clientScript -> registerScript('add', "
+			function addCategoria() {
+				$('#error').hide();
+				$('#dsubcategoria').hide();
+				$('#dcategoria').toggle();							
+			}
+			function addSubcategoria() {
+				$('#error').hide();
+				$('#dcategoria').hide();
+				$('#dsubcategoria').toggle();							
+			}
+			function addProducto() {
+				$('#error').hide();
+				$('#dcategoria').hide();
+				$('#dsubcategoria').hide();
+				$('#dproducto').toggle();							
+			}
+			function saveCategoria() {
+				$.ajax({
+					type : 'POST',
+					'dataType' : 'json',
+					'data': { categoria:$('#tcategoria').val()},
+					url : '" . Yii::app() -> createAbsoluteUrl("detalle/ncategoria") . "',
+					success : function(postData) {												
+						if (postData.result == 'OK') {							
+							$('#dcategoria').hide();
+							$('#good').show();		
+							location.reload();																									
+						} else {
+							//$('#dcategoria').hide();
+							$('#error').show();
+						}
+					},
+					async : false
+				});
+			}
+			function saveSubcategoria() {
+				$.ajax({
+					type : 'POST',
+					'dataType' : 'json',
+					'data': { categoria_id:$('#scategoria').val(),subcategoria:$('#tsubcategoria').val()},
+					url : '" . Yii::app() -> createAbsoluteUrl("detalle/nsubcategoria") . "',
+					success : function(postData) {												
+						if (postData.result == 'OK') {							
+							$('#dsubcategoria').hide();
+							$('#good').show();		
+							location.reload();																									
+						} else {
+							//$('#dsubcategoria').hide();
+							$('#error').show();
+						}
+					},
+					async : false
+				});
+			}
+			function saveProducto() {
+				$.ajax({
+					type : 'POST',
+					'dataType' : 'json',
+					'data': { subcategoria:$('#subcategoria_id').val(),producto:$('#tproducto').val()},
+					url : '" . Yii::app() -> createAbsoluteUrl("detalle/nproducto") . "',
+					success : function(postData) {												
+						if (postData.result == 'OK') {							
+							$('#dproducto').hide();
+							$('#good').show();		
+							location.reload();																									
+						} else {
+							//$('#dproducto').hide();
+							$('#error').show();
+						}
+					},
+					async : false
+				});
+			}
+		", CClientScript::POS_END);
+		$this->render('admin',array('model'=>$model,'modelCategoria'=>$modelCategoria));
 	}
 
 	public function loadModel($id)
@@ -162,4 +243,48 @@ class DetalleController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
+	public function actionNcategoria() {					
+		$model=new Categoria;
+		$model->categoria=$_POST['categoria'];		
+		if($model->save()){
+			echo json_encode(array('result' => 'OK'));			
+		}
+		else{
+			echo json_encode(array('result' => 'NO'));
+		}	
+	}
+	
+	public function actionNsubcategoria() {					
+		$model=new Subcategoria;
+		$model->categoria_id=$_POST['categoria_id'];		
+		$model->subcategoria=$_POST['subcategoria'];
+		if($model->save()){
+			echo json_encode(array('result' => 'OK'));			
+		}
+		else{
+			echo json_encode(array('result' => 'NO'));
+		}	
+	}
+
+	public function actionNproducto() {					
+		$model=new Producto;
+		$model->subcategoria_id=$_POST['subcategoria'];		
+		$model->producto=$_POST['producto'];
+		
+		if($model->save()){
+			$ingresoInicial=new Detalle();				
+			$ingresoInicial->fechaString=date("01/01/2015");
+			$ingresoInicial->precio=0;
+			$ingresoInicial->cantidad=0;				
+			$ingresoInicial->comentario="Creacion del producto";
+			$ingresoInicial->producto_id=$model->id;
+			$ingresoInicial->transaccion_id=3;
+			$ingresoInicial->save();
+			echo json_encode(array('result' => 'OK'));			
+		}
+		else{			
+			echo json_encode(array('result' => 'NO'));
+		}	
+	}		
 }

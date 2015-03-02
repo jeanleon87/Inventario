@@ -8,8 +8,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(	
-	array('label'=>'Ingreso', 'url'=>array('create','id'=>$model->id)),
-	array('label'=>'Egreso', 'url'=>array('add','id'=>$model->id)),
+	array('label'=>'Ingreso', 'url'=>array('increase','id'=>$model->id)),
+	array('label'=>'Egreso', 'url'=>array('decrease','id'=>$model->id)),
 	//array('label'=>'Asiento', 'url'=>array('update', 'id'=>$model->id)),	
 );
 
@@ -36,9 +36,9 @@ $this->menu=array(
 		array(
 			'header'=>'Opciones',
 			'class'=>'CButtonColumn',
-			'template'=>'{view}{plus}{minus}{first}{delete}',    	
+			'template'=>'{first}{delete}',    	
 			'htmlOptions'=>array('width'=>'170px'),
-			'deleteConfirmation'=>"js:'Advertencia: La eliminacion del registro '+$(this).parent().parent().children(':first-child').text()+' es irreversible. Esta seguro que desea continuar?'",	
+			//'deleteConfirmation'=>"js:'Advertencia: La eliminacion del registro '+$(this).parent().parent().children(':first-child').text()+' es irreversible. Esta seguro que desea continuar?'",	
     		'buttons'=>array(
     			'delete'=> array(
     				'label'=>'Eliminar',      
@@ -49,22 +49,7 @@ $this->menu=array(
     				'label'=>'Editar',      
             		'imageUrl'=>Yii::app()->request->baseUrl.'/images/edit.png',
             		'url'=>'Yii::app()->createUrl("detalle/first", array("id"=>$data->id))',    				
-				),
-    			'view' => array(
-            		'label'=>'Historico',      
-            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/view.png',      		
-            		//'url'=>'Yii::app()->createUrl("producto/c", array("id"=>$data->id))',
-        		),
-    			'plus' => array(
-            		'label'=>'Ingreso',      
-            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/plus.png',      		
-            		'url'=>'Yii::app()->createUrl("detalle/create", array("id"=>$data->id))',
-        		),
-        		'minus' => array(
-            		'label'=>'Egreso',
-            		'imageUrl'=>Yii::app()->request->baseUrl.'/images/minus.png',            		
-            		'url'=>'Yii::app()->createUrl("detalle/add", array("id"=>$data->id))',
-        		),
+				),    			
     		),
 		),
 	),

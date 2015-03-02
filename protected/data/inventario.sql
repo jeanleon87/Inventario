@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 01-03-2015 a las 06:03:36
+-- Tiempo de generación: 02-03-2015 a las 05:26:19
 -- Versión del servidor: 5.5.20
 -- Versión de PHP: 5.3.10
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `categoria` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
 -- Volcado de datos para la tabla `categoria`
@@ -58,7 +58,8 @@ INSERT INTO `categoria` (`id`, `categoria`) VALUES
 (23, 'Vehiculo'),
 (24, 'Velas y Fosforos'),
 (25, 'Mantequilla y Mayonesa'),
-(26, 'Computacion');
+(26, 'Computacion'),
+(27, 'Charcuteria');
 
 -- --------------------------------------------------------
 
@@ -77,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `detalle` (
   PRIMARY KEY (`id`),
   KEY `fk_detalle_producto1_idx` (`producto_id`),
   KEY `fk_detalle_transaccion1_idx` (`transaccion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=270 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=295 ;
 
 --
 -- Volcado de datos para la tabla `detalle`
@@ -351,7 +352,28 @@ INSERT INTO `detalle` (`id`, `fecha`, `precio`, `cantidad`, `comentario`, `produ
 (265, 1420848000, 103.56, 1.00, '', 125, 1),
 (266, 1423267200, 182.00, 1.00, '', 125, 1),
 (267, 1423958400, 0.00, -1.00, '1/2 Casa 1/2 Jean', 125, 2),
-(268, 1420070400, 0.00, 0.00, 'Creacion del producto', 126, 3);
+(268, 1420070400, 0.00, 0.00, 'Creacion del producto', 126, 3),
+(269, 1420070400, 0.00, 0.00, 'Creacion del producto', 127, 3),
+(270, 1425081600, 8.66, 15.00, '', 89, 1),
+(271, 1425081600, 55.00, 2.00, '', 98, 1),
+(272, 1425081600, 0.00, -1.00, 'Mama', 98, 2),
+(273, 1425081600, 0.00, -1.00, 'casa', 98, 2),
+(274, 1425081600, 70.00, 2.00, '', 120, 1),
+(275, 1425081600, 0.00, -1.00, 'Mama', 120, 2),
+(276, 1425081600, 28.00, 1.00, '', 82, 1),
+(277, 1425081600, 0.00, -1.00, 'Mama', 82, 2),
+(278, 1420070400, 0.00, 0.00, 'Creacion del producto', 128, 3),
+(279, 1425081600, 30.00, 2.00, 'Mama', 128, 1),
+(280, 1425081600, 19.00, 1.00, '', 86, 1),
+(281, 1425081600, 24.50, 1.00, '', 86, 1),
+(282, 1425081600, 0.00, -1.00, 'Casa', 86, 2),
+(283, 1425081600, 39.00, 1.00, 'Bolsa', 38, 1),
+(284, 1425081600, 30.00, 1.00, 'Frasco', 59, 1),
+(285, 1420070400, 0.00, 0.00, 'Creacion del producto', 129, 3),
+(286, 1425081600, 160.00, 0.50, '', 129, 1),
+(287, 1425081600, 0.00, -1.00, 'Bolsa', 3, 2),
+(289, 1425168000, 0.00, -1.00, '', 2, 2),
+(290, 1425168000, 0.00, -2.00, '', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -366,7 +388,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `subcategoria_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_producto_subcategoria1_idx` (`subcategoria_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=127 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=130 ;
 
 --
 -- Volcado de datos para la tabla `producto`
@@ -422,16 +444,16 @@ INSERT INTO `producto` (`id`, `producto`, `descripcion`, `subcategoria_id`) VALU
 (47, 'Teipe', '', 53),
 (48, 'Teflon', '', 53),
 (49, 'Cheese Wiz', '', 28),
-(50, 'Mostaza', '', 28),
-(51, 'Maiz', '', 28),
-(52, 'Inglesa', '', 65),
-(53, 'Soya', '', 65),
-(54, 'Heinz 57', '', 66),
-(55, 'Tomate', '', 66),
+(50, 'Salsa Mostaza', '', 28),
+(51, 'Salsa de Maiz', '', 28),
+(52, 'Salsa Inglesa', '', 65),
+(53, 'Salsa Soya', '', 65),
+(54, 'Salsa Heinz 57', '', 66),
+(55, 'Salsa de Tomate', '', 66),
 (56, 'Pasta de Tomate', '', 66),
-(57, 'Agridulce', '', 66),
-(58, 'Barbecue', '', 65),
-(59, 'Bologna', '', 67),
+(57, 'Salsa Agridulce', '', 66),
+(58, 'Salsa Barbecue', '', 65),
+(59, 'Salsa Bologna', '', 67),
 (60, 'Sardina', '', 68),
 (61, 'Chocolate', '', 9),
 (62, 'Pimienta', '', 26),
@@ -452,8 +474,8 @@ INSERT INTO `producto` (`id`, `producto`, `descripcion`, `subcategoria_id`) VALU
 (77, 'Vigilante', '', 44),
 (78, 'MOVISTAR', '', 45),
 (79, 'Jardinero', '', 46),
-(80, 'Saladas', '', 6),
-(81, 'Dulces', '', 6),
+(80, 'Galletas Saladas', '', 6),
+(81, 'Galletas Dulces', '', 6),
 (82, 'Caraota ', '', 36),
 (83, 'Arvejas', '', 36),
 (84, 'Lentejas', '', 36),
@@ -466,18 +488,18 @@ INSERT INTO `producto` (`id`, `producto`, `descripcion`, `subcategoria_id`) VALU
 (91, 'Jabon en Polvo', '', 50),
 (92, 'Jabon Lavaplatos Liquido', '', 50),
 (93, 'Jabon Lavaplatos Axion', '', 50),
-(94, 'Yukery', '', 14),
+(94, 'Jugo Yukery', '', 14),
 (95, 'Kerosene', '', 49),
 (96, 'Ligas', '', 53),
 (97, 'Leche en Polvo', '', 11),
-(98, 'Pastoreña', '', 12),
-(99, 'Condensada', '', 13),
+(98, 'Leche Pastoreña', '', 12),
+(99, 'Leche Condensada', '', 13),
 (100, 'Enguaje Bucal', '', 48),
 (101, 'Mayonesa', '', 60),
 (102, 'Mantequilla', '', 59),
 (103, 'Limpiahornos MAS', '', 50),
 (104, 'Desinfectante MAS', '', 50),
-(105, 'Fideos', '', 31),
+(105, 'Pasta Fideos', '', 31),
 (106, 'Papel Higienico', '', 49),
 (107, 'Papel aluminio', '', 49),
 (108, 'Toallin cocina', '', 49),
@@ -494,11 +516,14 @@ INSERT INTO `producto` (`id`, `producto`, `descripcion`, `subcategoria_id`) VALU
 (119, 'Vinagre', '', 23),
 (120, 'Yogurt', '', 16),
 (121, 'Varias', 'Q10, Glucosamine, Betacarotene', 52),
-(122, 'Molida', '', 1),
-(123, 'Guisar', '', 1),
-(124, 'Asar', '', 1),
+(122, 'Carne Molida', '', 1),
+(123, 'Carne Guisar', '', 1),
+(124, 'Carne Asar', '', 1),
 (125, 'Mortadela', '', 4),
-(126, 'Cartucho HP60', '', 70);
+(126, 'Cartucho HP60', '', 70),
+(127, 'Guantes ', NULL, 62),
+(128, 'Hueso ', NULL, 1),
+(129, 'Queso', NULL, 5);
 
 -- --------------------------------------------------------
 
@@ -512,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `subcategoria` (
   `categoria_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_subcategoria_categoria1_idx` (`categoria_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=71 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=72 ;
 
 --
 -- Volcado de datos para la tabla `subcategoria`
@@ -540,7 +565,7 @@ INSERT INTO `subcategoria` (`id`, `subcategoria`, `categoria_id`) VALUES
 (19, 'Cachapas', 5),
 (20, 'Maizina', 5),
 (21, 'Vegetal', 6),
-(22, 'Oliva', 6),
+(22, 'Aceite de Oliva', 6),
 (23, 'Vinagre', 6),
 (24, 'Condimentos', 7),
 (25, 'Cubitos', 7),
@@ -588,7 +613,8 @@ INSERT INTO `subcategoria` (`id`, `subcategoria`, `categoria_id`) VALUES
 (67, 'Enlatadas', 8),
 (68, 'Sardinas', 9),
 (69, 'Huevos', 1),
-(70, 'Consumibles', 26);
+(70, 'Consumibles', 26),
+(71, 'Jamon', 27);
 
 -- --------------------------------------------------------
 
