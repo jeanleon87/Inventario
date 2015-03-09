@@ -14,39 +14,63 @@ $this->menu=array(
 
 ?>
 <h1>Resumen Inventario General</h1>
+<?php
+	$this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+    	'id'=>'dialogocategoria',
+    	// additional javascript options for the dialog plugin
+    	'options'=>array(
+        	'title'=>'Nueva Categoria',
+        	'autoOpen'=>false,
+        	'width'=>'400px'
+    	),
+	));	
+	echo '<br>';	
+	echo CHtml::label('*','',array('style'=>'color:red'));
+   	echo CHtml::textField('tcategoria','',array('size'=>30,'maxlength'=>100,'placeholder'=>'Ingrese el nombre deseado'));
+	echo CHtml::link('Guardar','#',array('onclick'=>'saveCategoria()'));	
+	echo '<div id="errorc" style="display: none;color: red"><br><strong>Hubo un error! Debes ingresar los datos con *</strong></div>';	
+	echo '<div id="goodc" style="display: none;color: green"><br><strong>Se ha guardado la informacion con exito!</strong></div>';
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	
+	
+	$this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+    	'id'=>'dialogosubcategoria',
+    	// additional javascript options for the dialog plugin
+    	'options'=>array(
+        	'title'=>'Nueva Subcategoria',
+        	'autoOpen'=>false,
+        	'width'=>'400px',        	
+    	),
+	));	
+	echo '<br>';	
+	echo CHtml::label('*','',array('style'=>'color:red'));
+	echo CHtml::dropDownList('scategoria', 'scategoria', CHtml::listData(Categoria::model() -> findAll(array('order'=>'categoria')), 'id', 'categoria'), array('empty' => 'Seleccione una categoria'));
+	echo '<br><br>';		
+	echo CHtml::label('*','',array('style'=>'color:red'));
+	echo CHtml::textField('tsubcategoria','',array('size'=>30,'maxlength'=>100,'placeholder'=>'Ingrese el nombre deseado'));
+	echo CHtml::link('Guardar','#',array('onclick'=>'saveSubcategoria()'));					
+	echo '<div id="errors" style="display: none;color: red"><br><strong>Hubo un error! Debes ingresar los datos con *</strong></div>';
+	echo '<div id="goods" style="display: none;color: green"><br><strong>Se ha guardado la informacion con exito!</strong></div>';
+	echo '<br><br><br><br>';	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
 
+	
+	echo CHtml::link('Agregar Categoria', '#', array('onclick'=>'$("#dialogocategoria").dialog("open"); return false;',));
+	echo '     |     ';	
+	echo CHtml::link('Agregar Subcategoria', '#', array('onclick'=>'$("#dialogosubcategoria").dialog("open"); return false;',));
+	echo '     |     ';	
+	echo CHtml::link('Agregar Producto', '#', array('onclick'=>'$("#dialogoproducto").dialog("open"); return false;',));
+	
+?>
 <div class="row" style="text-align:right">
-	<?php	
-		echo CHtml::link('Nueva Categoria','#',array('onclick'=>'addCategoria()'));
-		echo '     |     ';	
-		echo CHtml::link('Nueva Subcategoria','#',array('onclick'=>'addSubcategoria()'));
-		echo '     |     ';
-		echo CHtml::link('Nueva Producto','#',array('onclick'=>'addProducto()'));
-	?>	
+	
 	<div class="row" style="text-align: left">
 		<br><br>
 		<div class="row">		
-			<div id="error" style="display: none;color: red">				
-				<strong>Hubo un error!</strong> Por favor intentalo de nuevo.
-				<br><br>
-			</div>			
-			<div id="good" style="display: none;color: green">				
-				<strong>Se ha guardado la informacion con exito!</strong>
-				<br><br>
-			</div>
-		</div>
-		<div class="row" id="dcategoria" style="display: none;">
-			<b>A&ntilde;adir Categoria</b><br>		
-			<?php echo CHtml::textField('tcategoria','',array('size'=>60,'maxlength'=>100,'placeholder'=>'Ingrese el nombre deseado')); ?>
-			<?php echo CHtml::link('Guardar','#',array('onclick'=>'saveCategoria()'));?>					
+			
 		</div>
 		
-		<div class="row" id="dsubcategoria" style="display: none;">
-			<b>A&ntilde;adir Subcategoria</b><br>
-			<?php echo CHtml::dropDownList('scategoria', 'scategoria', CHtml::listData(Categoria::model() -> findAll(array('order'=>'categoria')), 'id', 'categoria'), array('empty' => 'Seleccione una categoria')); ?>		
-			<?php echo CHtml::textField('tsubcategoria','',array('size'=>60,'maxlength'=>100,'placeholder'=>'Ingrese el nombre deseado')); ?>
-			<?php echo CHtml::link('Guardar','#',array('onclick'=>'saveSubcategoria()'));?>					
-		</div>
+		
 		<div class="row" id="dproducto" style="display: none;">
 			<b>A&ntilde;adir Producto</b><br>
 			<?php echo CHtml::dropDownList('scategorias', 'scategorias', array('0' => '-Por favor seleccione-') + CHtml::listData(Categoria::model() -> findAll(array('order'=>'categoria')), 'id', 'categoria'), array('id' => 'categorias'));?>

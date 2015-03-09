@@ -28,7 +28,7 @@ class Categoria extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('categoria', 'required'),
+			array('categoria', 'required','message'=>'Por favor ingrese un nombre para la categoria'),
 			array('categoria', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

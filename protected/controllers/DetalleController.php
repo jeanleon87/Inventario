@@ -173,13 +173,17 @@ class DetalleController extends Controller
 					'data': { categoria:$('#tcategoria').val()},
 					url : '" . Yii::app() -> createAbsoluteUrl("detalle/ncategoria") . "',
 					success : function(postData) {												
-						if (postData.result == 'OK') {							
-							$('#dcategoria').hide();
-							$('#good').show();		
-							location.reload();																									
-						} else {
-							//$('#dcategoria').hide();
-							$('#error').show();
+						if (postData.result == 'OK') {
+							$('#goodc').show();
+							setInterval(function(){
+								$('#dialogocategoria').dialog('close')									
+							},2500);
+							location.reload();																											
+						} else {						
+							$('#errorc').show();
+							setInterval(function(){
+								$('#errorc').hide();									
+							},5000);
 						}
 					},
 					async : false
@@ -192,13 +196,17 @@ class DetalleController extends Controller
 					'data': { categoria_id:$('#scategoria').val(),subcategoria:$('#tsubcategoria').val()},
 					url : '" . Yii::app() -> createAbsoluteUrl("detalle/nsubcategoria") . "',
 					success : function(postData) {												
-						if (postData.result == 'OK') {							
-							$('#dsubcategoria').hide();
-							$('#good').show();		
-							location.reload();																									
+						if (postData.result == 'OK') {
+							$('#goods').show();
+							setInterval(function(){
+								$('#dialogosubcategoria').dialog('close')	
+							},2500);
+							location.reload();																											
 						} else {
-							//$('#dsubcategoria').hide();
-							$('#error').show();
+							$('#errors').show();
+							setInterval(function(){
+								$('#errors').hide();									
+							},5000);
 						}
 					},
 					async : false
@@ -210,14 +218,19 @@ class DetalleController extends Controller
 					'dataType' : 'json',
 					'data': { subcategoria:$('#subcategoria_id').val(),producto:$('#tproducto').val()},
 					url : '" . Yii::app() -> createAbsoluteUrl("detalle/nproducto") . "',
-					success : function(postData) {												
-						if (postData.result == 'OK') {							
-							$('#dproducto').hide();
-							$('#good').show();		
-							location.reload();																									
-						} else {
-							//$('#dproducto').hide();
-							$('#error').show();
+					success : function(postData) {
+						if (postData.result == 'OK') {
+							$('#goodp').show();
+							setInterval(function(){
+								$('#dialogocategoria').dialog('close')	
+							},2500);
+							$.fn.yiiGridView.update('detalle-grid');																																		
+						} else {							
+							$('#errorp').html(postData.data);							
+							$('#errorp').show();
+							setInterval(function(){
+								$('#errorp').hide();									
+							},5000);
 						}
 					},
 					async : false

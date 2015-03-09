@@ -30,7 +30,8 @@ class Subcategoria extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('subcategoria, categoria_id', 'required'),
+			array('subcategoria', 'required','message'=>'Por favor ingrese un nombre para la subcategoria'),
+			array('categoria_id', 'required','message'=>'Por favor seleccione una categoria'),
 			array('categoria_id', 'numerical', 'integerOnly'=>true),
 			array('subcategoria', 'length', 'max'=>100),
 			// The following rule is used by search().
