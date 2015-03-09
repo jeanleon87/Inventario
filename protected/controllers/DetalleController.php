@@ -35,6 +35,9 @@ class DetalleController extends Controller
 
 	public function actionHistory($id)
 	{
+		if(!isset($id)){
+			$id=$_POST['id'];
+		}
 		$this->layout='//layouts/column2';
 		$model=$this->loadModel($id);
 		$total = 0;		
@@ -150,10 +153,21 @@ class DetalleController extends Controller
 		if(isset($_GET['Detalle']))
 			$model->attributes=$_GET['Detalle'];
 		Yii::app() -> clientScript -> registerScript('add', "
-			function addCategoria() {
-				$('#error').hide();
-				$('#dsubcategoria').hide();
-				$('#dcategoria').toggle();							
+			function abrirHistory(id) {									
+				$.ajax({
+					type : 'POST',
+					'dataType' : 'json',
+					url : '" . Yii::app() -> createAbsoluteUrl("detalle/history",array('id'=>'id')) . "',
+					'data': { id:id},	
+					success : function(postData) {												
+						if (postData.result == 'OK') {							
+							location.reload();																											
+						} else {
+						}
+					},
+					async : false
+				});										
+				$('#dialogohistorico').dialog('open'); return false;							
 			}
 			function addSubcategoria() {
 				$('#error').hide();
@@ -222,7 +236,7 @@ class DetalleController extends Controller
 						if (postData.result == 'OK') {
 							$('#goodp').show();
 							setInterval(function(){
-								$('#dialogocategoria').dialog('close')	
+								$('#dialogoproducto').dialog('close')	
 							},2500);
 							$.fn.yiiGridView.update('detalle-grid');																																		
 						} else {							

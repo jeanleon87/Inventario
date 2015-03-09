@@ -53,6 +53,30 @@ $this->menu=array(
 	echo '<div id="goods" style="display: none;color: green"><br><strong>Se ha guardado la informacion con exito!</strong></div>';
 	echo '<br><br><br><br>';	
 	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	
+	$this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+    	'id'=>'dialogoproducto',
+    	// additional javascript options for the dialog plugin
+    	'options'=>array(
+        	'title'=>'Nueva Producto',
+        	'autoOpen'=>false,
+        	'width'=>'400px',        	
+    	),
+	));	
+	echo '<br>';	
+	echo CHtml::label('*','',array('style'=>'color:red'));
+	echo CHtml::dropDownList('scategorias', 'scategorias', array('0' => '-Por favor seleccione-') + CHtml::listData(Categoria::model() -> findAll(array('order'=>'categoria')), 'id', 'categoria'), array('id' => 'categorias'));
+	echo '<br><br>';		
+	echo CHtml::label('*','',array('style'=>'color:red'));
+	echo CHtml::dropDownList('ssubcategorias','ssubcategorias',array('0' => '-Por favor seleccione-') + CHtml::listData(Subcategoria::model() -> findAll(array('order'=>'subcategoria')), 'id', 'subcategoria') , array('empty' => '(seleccione una subcategoria)', 'id' => 'subcategoria_id'));
+	echo '<br><br>';		
+	echo CHtml::label('*','',array('style'=>'color:red'));
+	echo CHtml::textField('tproducto','',array('size'=>30,'maxlength'=>255,'placeholder'=>'Ingrese el nombre deseado'));
+	echo CHtml::link('Guardar','#',array('onclick'=>'saveProducto()'));					
+	echo '<div id="errorp" style="display: none;color: red"><br><strong>Hubo un error! Debes ingresar los datos con *</strong></div>';
+	echo '<div id="goodp" style="display: none;color: green"><br><strong>Se ha guardado la informacion con exito!</strong></div>';
+	echo '<br><br>';	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
 
 	
 	echo CHtml::link('Agregar Categoria', '#', array('onclick'=>'$("#dialogocategoria").dialog("open"); return false;',));
@@ -62,28 +86,9 @@ $this->menu=array(
 	echo CHtml::link('Agregar Producto', '#', array('onclick'=>'$("#dialogoproducto").dialog("open"); return false;',));
 	
 ?>
-<div class="row" style="text-align:right">
-	
-	<div class="row" style="text-align: left">
-		<br><br>
-		<div class="row">		
-			
-		</div>
-		
-		
-		<div class="row" id="dproducto" style="display: none;">
-			<b>A&ntilde;adir Producto</b><br>
-			<?php echo CHtml::dropDownList('scategorias', 'scategorias', array('0' => '-Por favor seleccione-') + CHtml::listData(Categoria::model() -> findAll(array('order'=>'categoria')), 'id', 'categoria'), array('id' => 'categorias'));?>
-			<?php echo CHtml::dropDownList('ssubcategorias','ssubcategorias',array('0' => '-Por favor seleccione-') + CHtml::listData(Subcategoria::model() -> findAll(array('order'=>'subcategoria')), 'id', 'subcategoria') , array('empty' => '(seleccione una subcategoria)', 'id' => 'subcategoria_id')); ?>
-			<?php echo CHtml::textField('tproducto','',array('size'=>45,'maxlength'=>255,'placeholder'=>'Ingrese el nombre deseado')); ?>
-			<?php echo CHtml::link('Guardar','#',array('onclick'=>'saveProducto()'));?>					
-		</div>
-	</div>
-</div>
 
 <?php 
 $this->widget('ext.groupgridview.GroupGridView', array(
-//$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'detalle-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
@@ -116,7 +121,22 @@ $this->widget('ext.groupgridview.GroupGridView', array(
 			'header'=>'Comentario',
 			'value'=>'$data->producto->descripcion',
 			'htmlOptions'=>array('width'=>'30px'),
+		),
+		
+		array(
+			'header'=>'links',			
+			'value'=>'CHtml::link(CHtml::image("'.Yii::app()->request->baseUrl.'/images/view.png",""),"#",array("onclick"=>"abrirHistory($data->id)"))',			
+			'type'=>'raw',
 		),						
+		array(
+        'header'  => 'pf_main_view',
+        'htmlOptions'=>array('style'=>'text-align: center'),
+        'value' => function($data){
+			return CHtml::link(CHtml::image(Yii::app()->request->baseUrl.'/images/view.png',""),"#",array("onclick"=>"js:abrirHistory(".$data->id.")"));
+        },
+        'type'  => 'raw',
+    	),
+    	
 		array(
 			'header'=>'Opciones',
 			'class'=>'CButtonColumn',
@@ -154,7 +174,36 @@ $this->widget('ext.groupgridview.GroupGridView', array(
     		),
 		),		
 	),
-)); 
+));
+	echo CHtml::link('ver historico', '#', array('onclick'=>'$("#dialogohistorico").dialog("open"); return false;',));
+	$this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+    	'id'=>'dialogohistorico',
+    	// additional javascript options for the dialog plugin
+    	'options'=>array(
+        	'title'=>'Historico',
+        	'autoOpen'=>false,
+        	'width'=>'600px'
+    	),
+	));	
+		$model=$this->loadModel(2);
+		$total = 0;		
+		
+		$criteria=new CDbCriteria;
+		$criteria->with=array('producto');
+		$criteria->condition = "producto.id=".$model->producto_id;
+		$criteria->order='fecha';
+		$records = Detalle::model()->findAll($criteria);
+		
+		foreach ($records as $record) {
+            $total += $record->cantidad;			
+        }
+		
+		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>10)));
+		$this->renderPartial('history',array('dataProvider'=>$dataProvider,'total'=>$total,'model'=>$model));
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+
+
+ 
 ?>
 
 <script>
