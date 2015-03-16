@@ -94,6 +94,7 @@ function subtotal($id,$op) {
 	$condicion='';
 	if($op==1){
 		$columnas='detalle.cantidad';	
+		$condicion=' AND (detalle.transaccion_id = 1 OR detalle.transaccion_id=3)';
 	}
 	else if($op==2){
 		$columnas='detalle.cantidad*detalle.precio';
