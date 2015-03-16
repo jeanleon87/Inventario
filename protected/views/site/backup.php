@@ -8,7 +8,7 @@
 		<h1>Dropbox Uploader Demo</h1>
 		<?php
 		if ($_POST) {
-			require dirname(__FILE__) . '/../../../../protected/vendor/DropboxUploader/DropboxUploader.php';
+			require dirname(__FILE__) . '/../../vendor/DropboxUploader/DropboxUploader.php';
 			try {
 				$uploader = null;
 				if ($_FILES['file']['error'] !== UPLOAD_ERR_OK)
