@@ -123,6 +123,7 @@ class SiteController extends Controller
 	
 	public function actionBackup()
     {
-        Helpers::backupDb('/home/user/backups/db.sql');
+        //Helpers::backupDb('/home/user/backups/db.sql');
+		$this->render('backup');
     }
 }

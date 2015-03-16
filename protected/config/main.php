@@ -2,10 +2,12 @@
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
+	'theme'=>'bootstrap',
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'inventario',
 	'language'=>'es',
@@ -25,10 +27,11 @@ return array(
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 		'gii'=>array(
-			'class'=>'system.gii.GiiModule',
-			'password'=>false,
+			'bootstrap.gii',
+			//'class'=>'system.gii.GiiModule',
+			//'password'=>false,
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
+			//'ipFilters'=>array('127.0.0.1','::1'),
 		),
 		'backup',		
 	),
@@ -99,6 +102,17 @@ return array(
         	'datetimeFormat'=>"d M, Y h:m:s a",
 			'dateFormat'=>'d/m/Y',   // <-----ESTE ES
 		),
+		
+		'bootstrap'=>array(
+			'class'=>'bootstrap.components.Bootstrap',
+		),
+		
+		'dropbox' => array(
+        	'class' => 'ext.YiiDropbox.YiiDropbox',
+        	'appKey' => 'uqldjdugdzggf2h',
+        	'appSecret' => 'm623g4tjcp6u3xs',
+        	'root' => 'dropbox' //or 'sandbox'
+    ),
 
 	),
 

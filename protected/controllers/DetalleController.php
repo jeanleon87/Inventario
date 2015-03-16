@@ -20,7 +20,7 @@ class DetalleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('increase','decrease','first','ncategoria','nsubcategoria','nproducto'),
+				'actions'=>array('increase','decrease','first','ncategoria','nsubcategoria','nproducto','reportes'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -145,6 +145,14 @@ class DetalleController extends Controller
 		));
 	}
 	
+	public function actionReportes()
+	{
+		$categorias=Categoria::model()->findAll(array('group'=>'categoria'));
+				
+		$this->render('reportes',array('categorias'=>$categorias,));	
+		
+	}
+	
 	public function actionAdmin()
 	{
 		$modelCategoria=new Categoria;
@@ -155,9 +163,9 @@ class DetalleController extends Controller
 		Yii::app() -> clientScript -> registerScript('add', "
 			function abrirHistory(id) {									
 				$.ajax({
-					type : 'POST',
+					type : 'GET',
 					'dataType' : 'json',
-					url : '" . Yii::app() -> createAbsoluteUrl("detalle/history",array('id'=>'id')) . "',
+					url : '" . Yii::app() -> createAbsoluteUrl("detalle/history") . "',
 					'data': { id:id},	
 					success : function(postData) {												
 						if (postData.result == 'OK') {							

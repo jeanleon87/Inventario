@@ -122,7 +122,7 @@ $this->widget('ext.groupgridview.GroupGridView', array(
 			'value'=>'$data->producto->descripcion',
 			'htmlOptions'=>array('width'=>'30px'),
 		),
-		
+		/*
 		array(
 			'header'=>'links',			
 			'value'=>'CHtml::link(CHtml::image("'.Yii::app()->request->baseUrl.'/images/view.png",""),"#",array("onclick"=>"abrirHistory($data->id)"))',			
@@ -135,7 +135,7 @@ $this->widget('ext.groupgridview.GroupGridView', array(
 			return CHtml::link(CHtml::image(Yii::app()->request->baseUrl.'/images/view.png',""),"#",array("onclick"=>"js:abrirHistory(".$data->id.")"));
         },
         'type'  => 'raw',
-    	),
+    	),*/
     	
 		array(
 			'header'=>'Opciones',
@@ -175,34 +175,6 @@ $this->widget('ext.groupgridview.GroupGridView', array(
 		),		
 	),
 ));
-	echo CHtml::link('ver historico', '#', array('onclick'=>'$("#dialogohistorico").dialog("open"); return false;',));
-	$this->beginWidget('zii.widgets.jui.CJuiDialog',array(
-    	'id'=>'dialogohistorico',
-    	// additional javascript options for the dialog plugin
-    	'options'=>array(
-        	'title'=>'Historico',
-        	'autoOpen'=>false,
-        	'width'=>'600px'
-    	),
-	));	
-		$model=$this->loadModel(2);
-		$total = 0;		
-		
-		$criteria=new CDbCriteria;
-		$criteria->with=array('producto');
-		$criteria->condition = "producto.id=".$model->producto_id;
-		$criteria->order='fecha';
-		$records = Detalle::model()->findAll($criteria);
-		
-		foreach ($records as $record) {
-            $total += $record->cantidad;			
-        }
-		
-		$dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>10)));
-		$this->renderPartial('history',array('dataProvider'=>$dataProvider,'total'=>$total,'model'=>$model));
-	$this->endWidget('zii.widgets.jui.CJuiDialog');
-
-
  
 ?>
 

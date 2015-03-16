@@ -41,10 +41,10 @@
 				array('label'=>'SubCategorias', 'url'=>array('/subcategoria/admin')),
 				array('label'=>'Productos', 'url'=>array('/producto/admin')),
 				array('label'=>'Operaciones', 'url'=>array('/transaccion/admin'), 'visible'=>Yii::app()->user->isGuest),
-				
-				//array('label'=>'Respaldo', 'url'=>array('/site/backup')),
-				array('label'=>'About', 'url'=>array('/backup/default/create')),				
-				array('label'=>'About', 'url'=>array('/backup/default/index')),
+				array('label'=>'Reportes', 'url'=>array('/detalle/reportes')),
+				array('label'=>'Respaldo', 'url'=>array('/site/backup')),
+				//array('label'=>'About', 'url'=>array('/backup/default/create')),				
+				//array('label'=>'About', 'url'=>array('/backup/default/index')),
 				
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
