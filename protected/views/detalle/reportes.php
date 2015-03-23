@@ -28,8 +28,7 @@
 				<tr class="data">		
 					<td colspan="3">
 						<table width="100%" border="3">							
-							<?php $subcategorias = Subcategoria::model()->findAll('categoria_id='.$categoria->id);?>
-							<?php if(count($subcategorias)>1){?>
+							<?php $subcategorias = Subcategoria::model()->findAll('categoria_id='.$categoria->id);?>							
 							<?php foreach ($subcategorias as $subcategoria) {?>								
 							<tr style="background: #ECFBD4;">												
 								<td width="33%"><?php echo $subcategoria->subcategoria;?></td>
