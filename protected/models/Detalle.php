@@ -20,6 +20,9 @@ class Detalle extends CActiveRecord
 {
 	public $fechaString;
 	public $firstLetter;	
+  public $suma;
+  public $bs;
+  public $categoria;
 	/**
 	 * @return string the associated database table name
 	 */

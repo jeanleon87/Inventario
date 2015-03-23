@@ -148,8 +148,36 @@ class DetalleController extends Controller
 	public function actionReportes()
 	{
 		$categorias=Categoria::model()->findAll(array('group'=>'categoria'));
-				
-		$this->render('reportes',array('categorias'=>$categorias,));	
+    /*
+    SELECT SUM( DETALLE.CANTIDAD ) AS SUMA
+FROM DETALLE
+INNER JOIN (
+producto
+INNER JOIN (
+subcategoria
+INNER JOIN categoria ON subcategoria.categoria_id = categoria.id
+) ON producto.subcategoria_id = subcategoria.id
+) ON producto_id = producto.id
+GROUP BY CATEGORIA.ID
+ORDER BY CATEGORIA.CATEGORIA
+    */
+    
+    $criteria=new CDbCriteria;
+    $criteria->select='SUM(t.cantidad) as suma, SUM(t.cantidad*t.precio) as bs, categoria.categoria as categoria';
+    $criteria->join="INNER JOIN 
+      (producto INNER JOIN 
+        (subcategoria 
+          INNER JOIN 
+          categoria 
+          ON subcategoria.categoria_id=categoria.id)
+         ON producto.subcategoria_id=subcategoria.id)
+      ON producto_id=producto.id";
+    $criteria->group="categoria.id";   
+    $criteria->order="categoria.categoria"; 
+    $dataProvider=new CActiveDataProvider('Detalle',array('criteria'=>$criteria,'pagination'=>false));
+    
+    
+		$this->render('reportes',array('categorias'=>$categorias,'dataProvider'=>$dataProvider));	
 		
 	}
 	
