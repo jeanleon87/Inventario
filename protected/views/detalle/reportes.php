@@ -29,7 +29,8 @@
 					<td colspan="3">
 						<table width="100%" border="3">							
 							<?php $subcategorias = Subcategoria::model()->findAll('categoria_id='.$categoria->id);?>
-							<?php foreach ($subcategorias as $subcategoria) {?>
+							<?php if(count($subcategorias)>1){?>
+							<?php foreach ($subcategorias as $subcategoria) {?>								
 							<tr style="background: #ECFBD4;">												
 								<td width="33%"><?php echo $subcategoria->subcategoria;?></td>
 								<td width="33%"><?php print_r(subtotal($subcategoria->id,1));?></td>
@@ -52,7 +53,7 @@
 								</td>
 							</tr>
 							<?php }?>				
-							<?php }?>
+							<?php }?>							
 						</table>
 					</td>		
 				</tr>
@@ -68,11 +69,12 @@ function total($id,$op) {
 	$columnas='';
 	$condicion='';
 	if($op==1){
-		$columnas='detalle.cantidad';	
+		$columnas='detalle.cantidad';
+		$condicion=' AND detalle.transaccion_id <>3 AND detalle.cantidad>0';
 	}
 	else if($op==2){
 		$columnas='detalle.cantidad*detalle.precio';
-		$condicion=' AND detalle.cantidad >0';
+		$condicion=' AND detalle.cantidad >0 AND detalle.transaccion_id <> 3';
 	}
 		return Yii::app()->db->createCommand("
 			SELECT SUM({$columnas})
@@ -94,11 +96,11 @@ function subtotal($id,$op) {
 	$condicion='';
 	if($op==1){
 		$columnas='detalle.cantidad';	
-		$condicion=' AND (detalle.transaccion_id = 1 OR detalle.transaccion_id=3)';
+		$condicion=' AND (detalle.transaccion_id = 1)';
 	}
 	else if($op==2){
 		$columnas='detalle.cantidad*detalle.precio';
-		$condicion=' AND detalle.cantidad >0';
+		$condicion=' AND detalle.cantidad >0 AND (detalle.transaccion_id = 1)';
 	}
 		return Yii::app()->db->createCommand("
 			SELECT SUM({$columnas})
@@ -120,10 +122,11 @@ function subtotal2($id,$op) {
 	$condicion='';
 	if($op==1){
 		$columnas='detalle.cantidad';	
+		$condicion=' AND (detalle.transaccion_id = 1)';
 	}
 	else if($op==2){
 		$columnas='detalle.cantidad*detalle.precio';
-		$condicion=' AND detalle.cantidad >0';
+		$condicion=' AND detalle.cantidad >0 AND (detalle.transaccion_id = 1)';
 	}
 		return Yii::app()->db->createCommand("
 			SELECT SUM({$columnas})
