@@ -137,16 +137,3 @@ function subtotal2($id,$op) {
 		")->queryScalar();    	 
 }
 ?>
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-  'id'=>'detalle-grid',
-  'dataProvider'=>$dataProvider,  
-  'columns'=>array(
-    'categoria',    
-    'suma',
-    'bs',    
-    array(
-      'class'=>'CButtonColumn',
-    ),
-  ),
-)); ?>
