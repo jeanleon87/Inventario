@@ -27,7 +27,7 @@
 				array('label'=>'Productos', 'url'=>array('/producto/admin')),
 				array('label'=>'Operaciones', 'url'=>array('/transaccion/admin'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Reportes', 'url'=>array('/detalle/reportes')),
-				array('label'=>'Respaldo', 'url'=>array('/site/backup')),
+				array('label'=>'Respaldo', 'url'=>array('/site/backup')),				
                 array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                 array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
             ),
@@ -47,10 +47,7 @@
 
 	<div class="clear"></div>
 
-	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
+	<div id="footer">		
 	</div><!-- footer -->
 
 </div><!-- page -->

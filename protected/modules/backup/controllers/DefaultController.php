@@ -225,7 +225,7 @@ class DefaultController extends Controller
 		}
 		$this->EndBackup();
 
-		$this->redirect(array('index'));
+		$this->redirect(array('//site/backupdropbox'));
 	}
 	public function actionClean($redirect = true)
 	{
@@ -247,11 +247,11 @@ class DefaultController extends Controller
 		$this->EndBackup();
 
 		// logout so there is no problme later .
-		Yii::app()->user->logout();
+		//Yii::app()->user->logout();
 		
 		$this->execSqlFile($this->file_name);
 		unlink($this->file_name);
-		if ( $redirect == true) $this->redirect(array('index'));
+		//if ( $redirect == true) $this->redirect(array('index'));
 	}
 	public function actionDelete($file = null)
 	{
@@ -337,14 +337,14 @@ class DefaultController extends Controller
 	{
 		$this->updateMenuItems();
 		$message = 'OK. Done';
-		$sqlFile = $this->path . 'install.sql';
+		$sqlFile = $this->path . 'db_restore_SERVER.sql';
 		if ( isset($file))
 		{
 			$sqlFile = $this->path . basename($file);
 		}
 
-		$this->execSqlFile($sqlFile);
-		$this->render('restore',array('error'=>$message));
+		$this->execSqlFile($sqlFile);		
+		//$this->render('restore',array('error'=>$message));
 	}
 
 	public function actionUpload()

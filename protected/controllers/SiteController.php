@@ -1,7 +1,7 @@
 <?php
-
 class SiteController extends Controller
 {
+	
 	/**
 	 * Declares class-based actions.
 	 */
@@ -122,8 +122,34 @@ class SiteController extends Controller
 	}
 	
 	public function actionBackup()
-    {
-        //Helpers::backupDb('/home/user/backups/db.sql');
+    {    	
 		$this->render('backup');
     }
+
+	public function actionBackupDropBox(){
+		$file=dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'_backup'.DIRECTORY_SEPARATOR.'db_backup_LOCAL.sql';
+		$email='jeanleon@outlook.com';
+		$pass='jclv17465';
+		
+        require dirname(__FILE__) . '/../vendor/DropboxUploader/DropboxUploader.php';
+		try {
+			$uploader = null;
+			
+			// Upload
+			$uploader = new DropboxUploader($email, $pass);
+			//$uploader->upload($file,'db.sql');
+			$uploader->upload($file,'/inventario','db.sql');
+			//$uploader -> upload($_FILES['file']['tmp_name'], $_POST['destination'], $_FILES['file']['name']);
+			echo json_encode(array('respuesta'=>1,'div'=>'<div class="alert alert-success" role="alert">Archivo subido correctamente</div>'));			
+		} catch (Exception $e) {
+			// Handle Upload Exceptions
+			$label = ($uploader && $e -> getCode() & $uploader::FLAG_DROPBOX_GENERIC) ? 'DropboxUploader' : 'Exception';
+			$error = sprintf("[%s] #%d %s", $label, $e -> getCode(), $e -> getMessage());
+			echo json_encode(array('respuesta'=>2));
+		}		
+	}
+	public function actionRestoreDropBox(){				
+		require dirname(__FILE__) . '/../../dropbox.php';  	
+			
+	}
 }

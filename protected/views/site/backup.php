@@ -1,64 +1,77 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>Dropbox Uploader Demo</title>
-	</head>
-	<body>
-		<h1>Dropbox Uploader Demo</h1>
-		<?php
-		if ($_POST) {
-			require dirname(__FILE__) . '/../../vendor/DropboxUploader/DropboxUploader.php';
-			try {
-				$uploader = null;
-				if ($_FILES['file']['error'] !== UPLOAD_ERR_OK)
-					throw new Exception('File was not successfully uploaded from your computer.');
-				if ($_FILES['file']['name'] === "")
-					throw new Exception('File name not supplied by the browser.');
-				// Upload
-				$uploader = new DropboxUploader($_POST['email'], $_POST['password']);
-				$uploader -> upload($_FILES['file']['tmp_name'], $_POST['destination'], $_FILES['file']['name']);
-				echo '<span style="color: green">File successfully uploaded to your Dropbox!</span>';
-			} catch (Exception $e) {
-				// Handle Upload Exceptions
-				$label = ($uploader && $e -> getCode() & $uploader::FLAG_DROPBOX_GENERIC) ? 'DropboxUploader' : 'Exception';
-				$error = sprintf("[%s] #%d %s", $label, $e -> getCode(), $e -> getMessage());
-				echo '<span style="color: red">Error: ' . htmlspecialchars($error) . '</span>';
-			}
-		}
-	?>
-		<form method="POST" enctype="multipart/form-data">
-			<dl>
-				<dt>
-					<label for="email">Dropbox e-mail</label>
-				</dt>
-				<dd>
-					<input type="text" id="email" name="email">
-				</dd>
-				<dt>
-					<label for="password">Dropbox password</label>
-				</dt>
-				<dd>
-					<input type="password" id="password" name="password">
-				</dd>
-				<dt>
-					<label for="destination">Destination directory (optional)</label>
-				</dt>
-				<dd>
-					<input type="text" id="destination" name="destination">
-					e.g. "dir/subdirectory", will be created if it
-					doesn't exist
-				</dd>
-				<dt>
-					<label for="file"></label>File
-				</dt>
-				<dd>
-					<input type="file" id="file" name="file">
-				</dd>
-				<dd>
-					<input type="submit" value="Upload the file to my Dropbox!">
-				</dd>
-			</dl>
-		</form>
-	</body>
-</html>
+<script type="text/javascript">
+	$( document ).ready(function() {
+		$("#bien").hide();
+		$("#mal").hide();
+	});
+</script>
+<div class="container" id="page">
+	<div class="row">
+		<div class="span5">        					
+			<?php
+				echo CHtml::ajaxButton(
+			    	$label = 'Subir a DropBox', 
+			      	$url = array('backup/default/create'),
+			      	$ajaxOptions=array (        	
+			          	'dataType'=>'json',
+			          	'update'=>'#req_res_loading',
+			        	'beforeSend' => 'function() {           
+			            	$(\'#loading\').html(\'<img src="'.Yii::app()->baseUrl.'/images/loading.gif'.'"> cargando...\');
+			        	}',       
+			          	'success'=>'function(respuesta){
+			              	if(respuesta.respuesta==1){
+			              		$(\'#loading\').html("");
+								$("#bien").show();                	                
+			              	}
+			              	else{
+			              		$(\'#loading\').html("");
+								$("#mal").show();
+			              	}              
+			          	}'
+			      	),
+			      	$htmlOptions=array('class'=>'btn btn-primary btn-block')
+				);
+			?>
+		</div>
+		<div class="span5">        					
+			<?php
+				echo CHtml::ajaxButton(
+			    	$label = 'Descargar de DropBox', 
+			      	$url = array('site/restoredropbox'),
+			      	$ajaxOptions=array (        	
+			          	'dataType'=>'json',
+			          	'update'=>'#req_res_loading',
+			        	'beforeSend' => 'function() {           
+			            	$(\'#loading\').html(\'<img src="'.Yii::app()->baseUrl.'/images/loading.gif'.'"> cargando...\');
+			        	}',       
+			          	'success'=>'function(respuesta){
+			              	if(respuesta.respuesta==1){
+			              		$(\'#loading\').html("");								
+								$("#bien").show();								              
+			              	}
+		              	else{
+			              		$(\'#loading\').html("");
+								$("#mal").html(respuesta.msg);
+								$("#mal").show();
+			              	}              
+			          	}'
+			      	),
+			      	$htmlOptions=array('class'=>'btn btn-primary btn-block')
+				);
+			?>
+		</div>
+	</div>
+	<div class="row">
+		<div class="clearfix"></div>
+		<div class="span3"></div>
+		<div class="span4">
+			<br><br>
+			<div id="loading"></div>
+			<div id="bien" class="alert alert-success" role="alert">
+				<p>Operacion realizada correctamente </p>
+				<span><a href="<?php echo Yii::app()->createUrl("detalle/admin");?>">Continuar</a></span>				
+			</div>
+			<div id="mal" class="alert alert-success" role="alert">Hubo un error!! Intente de nuevo</div>
+		</div>
+		<div class="span3"></div>
+	</div>
+</div>
