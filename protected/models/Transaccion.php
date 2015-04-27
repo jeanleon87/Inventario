@@ -17,7 +17,7 @@ class Transaccion extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'transaccion';
+		return '{{transaccion}}';
 	}
 
 	/**

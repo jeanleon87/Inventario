@@ -127,7 +127,7 @@ class SiteController extends Controller
     }
 
 	public function actionBackupDropBox(){
-		$file=dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'_backup'.DIRECTORY_SEPARATOR.'db_backup_LOCAL.sql';
+		$file=dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'_backup'.DIRECTORY_SEPARATOR.'db_inventario_LOCAL.sql';
 		$email='jeanleon@outlook.com';
 		$pass='jclv17465';
 		

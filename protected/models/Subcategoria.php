@@ -19,7 +19,7 @@ class Subcategoria extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'subcategoria';
+		return '{{subcategoria}}';
 	}
 
 	/**

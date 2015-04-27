@@ -28,7 +28,7 @@ class Detalle extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'detalle';
+		return '{{detalle}}';
 	}
 
 	/**

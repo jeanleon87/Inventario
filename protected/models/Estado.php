@@ -18,7 +18,7 @@ class Estado extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'estado';
+		return '{{estado}}';
 	}
 
 	/**

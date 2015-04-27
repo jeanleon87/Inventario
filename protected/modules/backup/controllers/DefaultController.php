@@ -57,7 +57,7 @@ class DefaultController extends Controller
 	public $fp ;
 	public $file_name;
 	public $_path = null;
-	public $back_temp_file = 'db_backup_LOCAL';
+	public $back_temp_file = 'db_inventario_LOCAL';
 
 	protected function getPath()
 	{
@@ -155,7 +155,11 @@ class DefaultController extends Controller
 	}
 	public function getTables($dbName = null)
 	{
-		$sql = 'SHOW TABLES';
+		//$sql = 'SHOW TABLES';
+		$sql = 'SELECT t.table_name 
+   			FROM information_schema.tables t
+  			WHERE t.table_name LIKE "inventario\_%"
+  			ORDER BY t.table_name';
 		$cmd = Yii::app()->db->createCommand($sql);
 		$tables = $cmd->queryColumn();
 		return $tables;

@@ -1,14 +1,12 @@
 <?php
 
 // This is the database connection configuration.
-return array(
-	'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-	// uncomment the following lines to use a MySQL database
-	
-	'connectionString' => 'mysql:host=localhost;dbname=inventario',
+return array(	
+	'connectionString' => 'mysql:host=localhost;dbname=jclv_database',
 	'emulatePrepare' => true,
-	'username' => 'root',
-	'password' => '',
+	'username' => 'jclv_user',
+	'password' => 'Bz9CxSM0AO.',
 	'charset' => 'utf8',
+	'tablePrefix'=>'inventario_'
 	
 );
