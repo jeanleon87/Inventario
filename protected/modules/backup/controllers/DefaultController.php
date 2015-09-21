@@ -57,7 +57,7 @@ class DefaultController extends Controller
 	public $fp ;
 	public $file_name;
 	public $_path = null;
-	public $back_temp_file = 'db_inventario_LOCAL';
+	public $back_temp_file = 'localhost';
 
 	protected function getPath()
 	{

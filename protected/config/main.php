@@ -46,24 +46,6 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
-		
-		/*'ftp'=>array(
-          	'class'=>'application.extensions.ftp.EFtpComponent',
-          	'host'=>'ftp.ingenieroweb.com.ve',
-          	'port'=>21,
-          	'username'=>'ingenie3',
-          	'password'=>'jclv17465458',
-          	'ssl'=>false,
-          	'timeout'=>90,
-          	'autoConnect'=>true,
-    	),*/
-    	
-    	'ftp' => array(
-            'class' => 'ext.GFtp.GFtpApplicationComponent',
-            'connectionString' => 'ftp://ingenie3:jclv17465@ftp.ingenieroweb.com.ve:21',
-            'timeout' => 120,
-            'passive' => false
-        ),
 
 		// uncomment the following to enable URLs in path-format
 		/*
@@ -109,13 +91,6 @@ return array(
 		'bootstrap'=>array(
 			'class'=>'bootstrap.components.Bootstrap',
 		),
-		
-		'dropbox' => array(
-        	'class' => 'ext.YiiDropbox.YiiDropbox',
-        	'appKey' => 'uqldjdugdzggf2h',
-        	'appSecret' => 'm623g4tjcp6u3xs',
-        	'root' => 'dropbox' //or 'sandbox'
-    ),
 
 	),
 
